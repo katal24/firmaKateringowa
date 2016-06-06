@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Witaj</title>
+</h:head>
+
+<h:body>
+    <f:view>
+
+        <h2>Zaloguj się, aby rozpocząć</h2>
+
+        <h:form id="formLogin">
+            <h:panelGrid columns="3">
+
+                <h:outputLabel for="j_username" value="Username: "/>
+                <h:inputText value="#{bean1.username}" id="j_username" required="true" requiredMessage="Wypełnij to pole"/>
+                <h:message for="j_username"/>
+
+                <h:outputLabel for="j_password" value="Password: "/>
+                <h:inputSecret value="#{bean1.password}" id="j_password" required="true" requiredMessage="Wypelnij to pole"/>
+                <h:message for="j_password"/>
+
+                <h:commandButton value="Login" action="#{bean1.action()}"/>
+            </h:panelGrid>
+        </h:form>
+
+        <h3>Nie masz jeszcze konta?</h3>
+
+        <h:form id="f"  >
+            <h:commandButton value="Zarejestruj się" action="#{db.setRolesList2()}">
+                <f:ajax render="@form"/>
+            </h:commandButton>
+            <h:panelGrid columns="3" rendered="#{db.rejestracja}">
+
+                <h:outputLabel id="cos" for="j_1" value="Login: "/>
+                <h:inputText value="#{user.login}" id="j_1" required="true" requiredMessage="Wypełnij to pole"/>
+                <h:message for="j_1"/>
+
+                <h:outputLabel for="j_password1" value="Password: "/>
+                <h:inputSecret value="#{user.password}" id="j_password1" required="true" requiredMessage="Wypelnij to pole"/>
+                <h:message for="j_password1"/>
+
+                <h:outputLabel for="j_imie" value="Imię i nazwisko: "/>
+                <h:inputText value="#{user.imie}" id="j_imie" required="true" requiredMessage="Wypełnij to pole"/>
+                <h:message for="j_imie"/>
+
+                <h:outputLabel for="j_firma" value="Firma: "/>
+                <h:inputText value="#{user.firma}" id="j_firma" required="true" requiredMessage="Wypełnij to pole"/>
+                <h:message for="j_firma"/>
+                <h:commandButton value="Zarejestruj" action="#{db.addUser(user)}"/>
+            </h:panelGrid>
+
+        </h:form>
+    </f:view>
+</h:body>
+</html>
+
+
+
+
+
+
+

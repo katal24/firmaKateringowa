@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+<!--TODO-->
+<!--Poprawić zapis edycji potrawy-->
+<!--ew. usuwanie skladnikow, kiedy usuwamy potrawe-->
+<!--dorobić walidacje-->
+
+<h:head>
+    <title>e-Kantor</title>
+</h:head>
+
+<h:body>
+    <f:view>
+        <h2>Konsola administratora</h2>
+        <h:form id="myform">
+
+            <p:panelGrid columns="1">
+                <!--KATEGORIE-->
+                <h:commandButton id="k" value="Pokaż kategorie" action="#{db.pokaz()}" >
+                    <f:ajax render="kategorie"/>
+                </h:commandButton>
+                <p:dataTable id = "kategorie" value="#{db.kategories}" var="kat">
+                    <p:column>
+                        <p:inputText value="#{kat.nazwa}" size="30" rendered="#{kat.editable}"/>
+                        <h:outputLabel value="#{kat.nazwa}" rendered="#{not kat.editable}"/>
+                    </p:column>
+                    <p:column>
+                        <h:commandLink value="Edytuj" action="#{db.editKategorie(kat)}" rendered="#{not kat.editable}" />
+                        <h:commandLink value="Zapisz zmiany" action="#{db.saveAction3(kat)}" rendered="#{kat.editable}" />
+                    </p:column>
+                    <p:column>
+                        <h:commandLink value="Usun" action="#{db.deleteKategorie(kat)}" rendered="#{not kat.editable}" />
+                    </p:column>
+                </p:dataTable>
+
+
+                <!--DODAWANIE KATEGORII-->
+                <h:commandButton value="Dodaj kategorie" action="#{db.setDodajKategorie}" />
+                <p:panelGrid rendered="#{db.dodajKategorie}">
+                    nazwa: <p:inputText value="#{db.kategoria1}" size="30" /><br/>
+                    <h:commandLink value="Dodaj" action="#{db.addKategorie()}">
+                    </h:commandLink><br/>
+                </p:panelGrid>
+
+                <br/>
+                <!--POTRAWY-->
+                <b>Wybierz kategorie</b>
+                <!-- wywyluje pobranie potraw z bazy do listy "potrawy"-->
+                <h:selectOneMenu id="a" value="#{db.kategoria}">
+                    <f:selectItems id="itemy" value="#{db.getNameKategorie()}" />
+                    <f:ajax render="potrawyList"/>
+                </h:selectOneMenu> <br/><br/>
+
+                <p:dataTable id="potrawyList" value="#{db.potrawy}" var="pot">
+                    <p:column>
+                        <p:inputText value="#{pot.nazwaPotrawy}" rendered="#{pot.editable}"/>
+                        <h:outputText value="#{pot.nazwaPotrawy}" rendered="#{not pot.editable}"/>
+                    </p:column>
+                    <p:column>
+                        <p:inputText value="#{pot.cena}" rendered="#{pot.editable}"/>
+                        <h:outputText value="#{pot.cena}" rendered="#{not pot.editable}"/>
+                    </p:column>
+                    <p:column>
+                        <h:commandButton disabled="#{pot.editable}" value="Pokaż szczegóły" action="#{db.wybierzPotrawe(pot)}" >
+                            <f:ajax render=":myform:potrawa :myform:pot1" />
+                        </h:commandButton>
+                    </p:column>
+                    <p:column>
+                        <h:commandLink value="Edytuj" action="#{db.editPotrawy(pot)}" rendered="#{not pot.editable}" />
+                        <h:commandLink value="Zapisz zmiany1" action="#{db.saveAction(pot)}" rendered="#{pot.editable}" />
+                    </p:column>
+                    <p:column>
+                        <h:commandLink value="Usun" action="#{db.deletePotrawy(pot)}" rendered="#{not pot.editable}" />
+                    </p:column>
+                    <p:column>
+                        <h:commandLink value="Usun z menu" action="#{db.deletePotrawyFromMenu(pot)}" rendered="#{pot.isInMenu.equals('1')}" />
+                        <h:commandLink value="Dodaj do menu" action="#{db.addPotrawyToMenu(pot)}" rendered="#{!pot.isInMenu.equals('1')}" />
+
+                    </p:column>
+                </p:dataTable>
+
+                <!--DODAWANIE POTRAWY-->
+                <h:commandButton id="pot4" value="Dodaj danie" action="#{db.setDodajPotrawe}" />
+            </p:panelGrid>
+            <p:panelGrid rendered="#{db.dodajPotrawe}">
+
+                kategoria:
+                <p:selectOneMenu value="#{db.kategoria1}">
+                    <f:selectItems value="#{db.getNameKategorie()}" />
+                </p:selectOneMenu>
+                nazwa: <p:inputText value="#{db.nazwaPotrawy}" size="30" /><br/>
+                cena: <p:inputText value="#{db.cena}" size="15" /><br/>
+                <h:commandLink value="Dodaj" action="#{db.addPotrawe()}"/><br/>
+            </p:panelGrid>
+
+            <!--SKLADNIKI-->
+            <p:panelGrid columns="1">
+                <h:outputText id="pot1" value="#{db.wybranaPotrawa}"/>
+                <p:dataTable id = "potrawa" value="#{db.listSkladnikowPotrawy}" var="skladnik">
+                    <p:column>
+                        <p:inputText value="#{skladnik.nazwaSkladnika}" size="30" rendered="#{skladnik.editable}"/>
+                        <p:outputLabel value="#{skladnik.nazwaSkladnika}" rendered="#{not skladnik.editable}"/>
+                    </p:column>
+                    <p:column>
+                        <p:inputText value="#{skladnik.ilosc}" size="15" rendered="#{skladnik.editable}"/>
+                        <h:outputText value=" (#{skladnik.ilosc})" rendered="#{not skladnik.editable}"/>
+                    </p:column>
+                    <p:column>
+                        <h:commandLink value="Edytuj" action="#{db.editSkladniki(skladnik)}" rendered="#{not skladnik.editable}" />
+                        <h:commandLink value="Zapisz zmiany" action="#{db.saveAction2(skladnik)}" rendered="#{skladnik.editable}" />
+                    </p:column>
+                    <p:column>
+                        <h:commandLink value="Usun" action="#{db.deleteSkladniki(skladnik)}" rendered="#{not skladnik.editable}" />
+                    </p:column>
+                </p:dataTable>
+
+                <!--DODAWANIE Skladnika-->
+                <h:commandButton value="Dodaj skladnik" action="#{db.setDodajSkladnik(true)}" />
+
+                <p:panelGrid rendered="#{db.dodajSkladnik}">
+                    nazwa: <p:inputText value="#{db.nazwaSkladnika}" size="30" /><br/>
+                    ilosc: <p:inputText value="#{db.ilosc}" size="15" /><br/>
+                    <h:commandLink value="Dodaj" action="#{db.addSkladnik()}"/><br/>
+                </p:panelGrid>
+
+            </p:panelGrid>
+
+        </h:form>
+
+        <p>
+            <h:outputText value="______________________________" style="vertical-align:super;"/><br/>
+            <a href="index.xhtml">MENU LABORATORIUM</a>
+        </p>
+
+    </f:view>
+</h:body>
+</html>

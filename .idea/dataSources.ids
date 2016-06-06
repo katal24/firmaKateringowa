@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - talaga1@mysql.agh.edu.pl" uuid="317b4dc0-87f1-4dee-87f4-42c35887d670">
+    <database-info product="MySQL" version="5.0.96" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <schema name="" catalog="talaga1"/>
+    <table name="katalog" schema="" catalog="talaga1" type="TABLE">
+      <column name="id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="idZamowienia" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="idKlienta" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="a1" columns="idZamowienia" ref-table="zamowienia" ref-schema="" ref-catalog="talaga1" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="id" unique="true" columns="id"/>
+      <index name="fk2" unique="false" columns="idKlienta"/>
+      <index name="fk3" unique="false" columns="idZamowienia"/>
+    </table>
+    <table name="kategorie" schema="" catalog="talaga1" type="TABLE">
+      <column name="id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="nazwa" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="editable" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_kategoria" table="potrawy" schema="" catalog="talaga1" columns="idkategoria"/>
+    </table>
+    <table name="potrawy" schema="" catalog="talaga1" type="TABLE">
+      <column name="id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="idkategoria" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="nazwaPotrawy" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="cena" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="ileZamowien" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="editable" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="isInMenu" sqlType="VARCHAR" precision="6" scale="0" nullable="true" jdbcType="12" def="JzAn"/>
+      <column name="zamawiajacy" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_kategoria" columns="idkategoria" ref-table="kategorie" ref-schema="" ref-catalog="talaga1" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk2" table="zawartoscZamowienia" schema="" catalog="talaga1" columns="idPotrawy"/>
+      <index name="id" unique="true" columns="id"/>
+      <index name="fk_pot" unique="false" columns="idkategoria"/>
+    </table>
+    <table name="skladniki" schema="" catalog="talaga1" type="TABLE">
+      <column name="idskladnika" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="idpotrawy" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
+      <column name="nazwaSkladnika" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="ilosc" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="editable" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MA=="/>
+      <primary-key name="PRIMARY" columns="idskladnika"/>
+      <index name="idskladnika" unique="true" columns="idskladnika"/>
+      <index name="fk_skl" unique="false" columns="idpotrawy"/>
+    </table>
+    <table name="users" schema="" catalog="talaga1" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="login" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mail" sqlType="VARCHAR" precision="40" scale="0" nullable="true" jdbcType="12"/>
+      <column name="Imie" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="firma" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="doZaplaty" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="platnosc" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="rola" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12" def="J2tsaWVudCc="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="true" columns="id"/>
+      <index name="fk1" unique="false" columns="id"/>
+    </table>
+    <table name="zamowienia" schema="" catalog="talaga1" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="status" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="data" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="miejsce" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="rachunek" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="notatka" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="godzina" sqlType="VARCHAR" precision="10" scale="0" nullable="true" jdbcType="12"/>
+      <column name="platnosc" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="rodzaj" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12" def="J2plZG5vcmF6b3dlJw=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="a1" table="katalog" schema="" catalog="talaga1" columns="idZamowienia"/>
+      <exported-key name="fk1" table="zawartoscZamowienia" schema="" catalog="talaga1" columns="idZamowienia"/>
+      <index name="id" unique="true" columns="id"/>
+    </table>
+    <table name="zamowienie" schema="" catalog="talaga1" type="TABLE">
+      <column name="idZamowienia" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="Imie" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="data" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="godzina" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
+      <column name="miejsce" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="rachunek" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="status" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="notatka" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="platnosc" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="rodzaj" sqlType="VARCHAR" precision="12" scale="0" nullable="true" jdbcType="12" def="J2plZG5vcmF6b3dlJw=="/>
+      <primary-key name="PRIMARY" columns="idZamowienia"/>
+      <index name="id" unique="true" columns="idZamowienia"/>
+    </table>
+    <table name="zawartoscZamowienia" schema="" catalog="talaga1" type="TABLE">
+      <column name="id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="idZamowienia" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="idPotrawy" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk1" columns="idZamowienia" ref-table="zamowienia" ref-schema="" ref-catalog="talaga1" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk2" columns="idPotrawy" ref-table="potrawy" ref-schema="" ref-catalog="talaga1" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="id" unique="true" columns="id"/>
+      <index name="id_2" unique="true" columns="id"/>
+      <index name="fk1" unique="false" columns="idZamowienia"/>
+      <index name="kf2" unique="false" columns="idPotrawy"/>
+    </table>
+  </data-source>
+</component>
