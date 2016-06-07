@@ -14,10 +14,12 @@
 <h:body>
     <f:view>
 
-        <h2>Dziękujemy za skorzystanie z naszych usług.</h2>
-
-       <p><a href="login.xhtml">ZALOGUJ SIĘ PONOWNIE</a></p>
-
+        <h2>Logowanie nie powiodło się.</h2>
+        <h3>Login lub hasło niepoprawne</h3>
+        <h4>Spróbuj ponownie</h4>
+<form action="logout.xhtml">
+        <h:commandButton type="submit" value="Zaloguj się ponownie"/>
+</form>
     </f:view>
 </h:body>
 </html>

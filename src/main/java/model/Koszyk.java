@@ -102,7 +102,7 @@ public class Koszyk {
 
         for(Potrawy p : wKoszyku){
             p.setIleZamowien(p.getIleZamowien()+1);
-            p.setZamawiajacy(p.getZamawiajacy() + " ; " + DB.getStricZalogowanyUser().getLogin());
+            p.setZamawiajacy(p.getZamawiajacy() + " ; " + DB.getStricZalogowanyUser().getUsername());
             final Session session = DB.getSession();
             ZawartoscZamowienia zawartosc = new ZawartoscZamowienia();
             zawartosc.setIdZamowienia(id);

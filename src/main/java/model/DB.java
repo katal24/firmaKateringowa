@@ -295,7 +295,7 @@ public class DB implements Serializable {
 
         allSubskrypcje = new ArrayList<ZamowienieKompletne>();
         allZamowienia = new ArrayList<ZamowienieKompletne>();
-        Query q = session.createSQLQuery("select k.idZamowienia, Imie, data, godzina, miejsce, rachunek, status, z.platnosc, notatka, rodzaj from katalog k join zamowienia z on(k.idZamowienia=z.id) join users u on (k.idKlienta=u.id) where u.login='"+zalogowanyUser.getLogin()+"'").addEntity(Zamowienie.class);
+        Query q = session.createSQLQuery("select k.idZamowienia, Imie, data, godzina, miejsce, rachunek, status, z.platnosc, notatka, rodzaj from katalog k join zamowienia z on(k.idZamowienia=z.id) join users u on (k.idKlienta=u.id) where u.login='"+zalogowanyUser.getUsername()+"'").addEntity(Zamowienie.class);
         gotoZamow(q);
 
         session.close();

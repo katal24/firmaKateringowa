@@ -26,7 +26,7 @@ public class User implements Serializable {
         //todo patrz wyzej
 
         Session session = DB.getSession();
-        Query query = session.createQuery("select id from users u where u.login = :name and u.password = :pass").setString("name", this.getUsername()).setString("pass", this.getPassword());
+        Query query = session.createQuery("select id from users u where u.username = :name and u.password = :pass").setString("name", this.getUsername()).setString("pass", this.getPassword());
 
         isLogged = (query.uniqueResult() != null);
         System.out.println("ISLOGGED======" + isLogged);

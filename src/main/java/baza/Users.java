@@ -1,5 +1,7 @@
 package baza;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,10 +10,12 @@ import javax.persistence.Id;
 /**
  * Created by dawid on 06.06.16.
  */
+@ManagedBean(name="user")
+@SessionScoped
 @Entity(name="users")
 public class Users {
     private int id;
-    private String login;
+    private String username;
     private String password;
     private String imie;
     private String firma;
@@ -31,13 +35,13 @@ public class Users {
     }
 
     @Basic
-    @Column(name = "login")
-    public String getLogin() {
-        return login;
+    @Column(name = "username")
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Basic
@@ -119,7 +123,7 @@ public class Users {
 
         if (id != users.id) return false;
         if (Double.compare(users.doZaplaty, doZaplaty) != 0) return false;
-        if (login != null ? !login.equals(users.login) : users.login != null) return false;
+        if (username != null ? !username.equals(users.username) : users.username != null) return false;
         if (password != null ? !password.equals(users.password) : users.password != null) return false;
         if (imie != null ? !imie.equals(users.imie) : users.imie != null) return false;
         if (firma != null ? !firma.equals(users.firma) : users.firma != null) return false;
@@ -135,7 +139,7 @@ public class Users {
         int result;
         long temp;
         result = id;
-        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (imie != null ? imie.hashCode() : 0);
         result = 31 * result + (firma != null ? firma.hashCode() : 0);
