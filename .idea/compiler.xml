@@ -23,10 +23,12 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="firmaKateringowa" />
+        <module name="systemPlacowy" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="firmaKateringowa" target="1.5" />
+      <module name="systemPlacowy" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

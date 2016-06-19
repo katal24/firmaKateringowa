@@ -22,7 +22,7 @@
     <facet type="hibernate" name="Hibernate">
       <configuration>
         <datasource-map>
-          <unit-entry name="dataSource" />
+          <unit-entry name="dataSource" value="317b4dc0-87f1-4dee-87f4-42c35887d670" />
         </datasource-map>
         <naming-strategy-map>
           <unit-entry name="dataSource" value="org.hibernate.cfg.DefaultComponentSafeNamingStrategy" />
@@ -57,5 +57,6 @@
     <orderEntry type="library" name="PrimeFaces-5.2" level="project" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
     <orderEntry type="library" name="javax.mail" level="project" />
+    <orderEntry type="library" name="jax-rs-jersey-1.12" level="project" />
   </component>
 </module>

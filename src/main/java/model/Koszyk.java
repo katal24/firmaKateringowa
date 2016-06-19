@@ -1,9 +1,6 @@
 package model;
 
-import baza.Katalog;
-import baza.Potrawy;
-import baza.Zamowienia;
-import baza.ZawartoscZamowienia;
+import baza.*;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -16,7 +13,17 @@ import java.util.ArrayList;
  */
 @ManagedBean(name="koszyk")
 @SessionScoped
+//@Path("/kosz")
 public class Koszyk {
+
+//    @GET
+//    @Produces("koszyk/plain")
+//    @Path("/geta")
+//    public String getClichedMessage() {
+//        // Return some cliched textual content
+//        // return allPotrawy.toString();
+//        return "koszyczek";
+//    }
 
     private ArrayList<Potrawy> wKoszyku;
     private double koszt;
@@ -31,6 +38,7 @@ public class Koszyk {
     private String wybranySposobZaplaty, wybranyRodzajZamowienia; //="jednorazowe";
     private boolean subskrypcja = false;
     private String formaDaty;
+    public String koszyk = "tekst z koszyka";
 
     Session session = DB.getSession();
 
@@ -75,6 +83,7 @@ public class Koszyk {
     }
 
     public void zakonczZlecenie() {
+        Users user = null;
 
         if(!session.isOpen()) {
             session = DB.getSession();
@@ -84,12 +93,21 @@ public class Koszyk {
         zamowienie.setData(this.date);
         zamowienie.setGodzina(this.godzina);
         zamowienie.setMiejsce(this.miejsce);
-        zamowienie.setRachunek(this.koszt());
+        if(this.wybranySposobZaplaty.equals("platnosc gotowka")) {
+            zamowienie.setRachunek(this.koszt());
+        } else{
+            zamowienie.setRachunek(0.0);
+            user = DB.getStricZalogowanyUser();
+            user.setDoZaplaty(user.getDoZaplaty()+this.koszt());
+        }
         zamowienie.setPlatnosc(this.wybranySposobZaplaty);
         zamowienie.setRodzaj(this.wybranyRodzajZamowienia);
 
         session.beginTransaction();
         session.save(zamowienie);
+        if(!this.wybranySposobZaplaty.equals("platnosc gotowka")) {
+            session.update(user);
+        }
         session.getTransaction().commit();
         //pobieram id wpisanego zamowienia
 

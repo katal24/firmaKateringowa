@@ -25,8 +25,12 @@
 
                 <h:outputLabel value="Imie i nazwisko: #{db.zalogowanyUser.imie}"/>
                 <h:outputLabel value="Firma: #{db.zalogowanyUser.firma}"/>
-                <h:outputLabel value="Obciążenie pensji: #{db.zalogowanyUser.doZaplaty}"/>
-                <h:outputLabel value="Login: #{db.zalogowanyUser.login}"/>
+                <h:outputLabel rendered="#{db.zalogowanyUser.platnosc.equals('potracanie z wyplat')}" value="Obciążenie pensji: #{db.zalogowanyUser.doZaplaty}0 zł"/>
+                <h:outputLabel value="Login: #{db.zalogowanyUser.username}"/>
+
+                <h:commandButton value="Złóż wniosek na potrzeby potrącania z wypłat " action="#{db.wniosekOPotracanie()}" rendered="#{not db.zalogowanyUser.platnosc.equals('potracanie z wyplat')}">
+                    <f:ajax render="@form"/>
+                </h:commandButton>
 
                 <h:commandButton value="Zmień hasło" action="#{db.setZmianaHasla(true)}">
                     <f:ajax render="@form"/>

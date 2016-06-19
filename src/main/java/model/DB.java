@@ -10,7 +10,7 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,9 +20,21 @@ import java.util.List;
  * Created by dawid on 11.05.16.
  */
 //@Qualifier("dataSource")
+@XmlRootElement
 @ManagedBean(name="db")
 @SessionScoped
-public class DB implements Serializable {
+public class DB{
+//
+//    @GET
+//    @Produces("potrawa/plain")
+//    @Path("/geta")
+//    public String getClichedMessage() {
+//        System.out.println("#########################################JESTEM W TEJ METODZIE W BAZIE DANYCH");
+//        // Return some cliched textual content
+//        // return allPotrawy.toString();
+//        return "bazaaa";
+//    }
+
 
     private ArrayList<Potrawy> potrawy;
     private ArrayList<Potrawy> potrawyMenu;
@@ -46,7 +58,25 @@ public class DB implements Serializable {
     private ArrayList<ZamowienieKompletne> allSubskrypcje;
     private ArrayList<Potrawy> topTen;
     private String kategoriaMenu;
+    private ArrayList<Firmy> listaFirm;
+    private ArrayList<String> listaFirmNazwy;
+    public static String zDb = "aleAkcja z DB :)";
 
+    public ArrayList<String> getListaFirmNazwy() {
+        return listaFirmNazwy;
+    }
+
+    public void setListaFirmNazwy(ArrayList<String> listaFirmNazwy) {
+        this.listaFirmNazwy = listaFirmNazwy;
+    }
+
+    public ArrayList<Firmy> getListaFirm() {
+        return listaFirm;
+    }
+
+    public void setListaFirm(ArrayList<Firmy> listaFirm) {
+        this.listaFirm = listaFirm;
+    }
 
     public ArrayList<Potrawy> getPotrawyMenu() {
         return potrawyMenu;
@@ -146,6 +176,7 @@ public class DB implements Serializable {
     public String setRolesList2(){
         System.out.println("jestem w set role 2");
         rejestracja = !rejestracja;
+        getAllFirmy();
 //        this.rolesList = new ArrayList<String>();
 //        rolesList.add("admin");
 //        rolesList.add("manager menu");
@@ -159,6 +190,7 @@ public class DB implements Serializable {
         System.out.println("-------------------------Dodaje usera do bazy:");
         //dorobic dodanie usera do bazy
 
+        user.setRola("klient");
         final Session session = getSession();
         session.beginTransaction();
         session.save(user);
@@ -295,7 +327,7 @@ public class DB implements Serializable {
 
         allSubskrypcje = new ArrayList<ZamowienieKompletne>();
         allZamowienia = new ArrayList<ZamowienieKompletne>();
-        Query q = session.createSQLQuery("select k.idZamowienia, Imie, data, godzina, miejsce, rachunek, status, z.platnosc, notatka, rodzaj from katalog k join zamowienia z on(k.idZamowienia=z.id) join users u on (k.idKlienta=u.id) where u.login='"+zalogowanyUser.getUsername()+"'").addEntity(Zamowienie.class);
+        Query q = session.createSQLQuery("select k.idZamowienia, Imie, data, godzina, miejsce, rachunek, status, z.platnosc, notatka, rodzaj from katalog k join zamowienia z on(k.idZamowienia=z.id) join users u on (k.idKlienta=u.id) where u.username='"+zalogowanyUser.getUsername()+"'").addEntity(Zamowienie.class);
         gotoZamow(q);
 
         session.close();
@@ -364,6 +396,8 @@ public class DB implements Serializable {
 
     static {
         try {
+
+            System.out.println("CHCE WYKONYWAC STATIC Z DB");
             Configuration configuration = new AnnotationConfiguration();
             configuration.configure();
 
@@ -420,6 +454,27 @@ public class DB implements Serializable {
 
         return namesList;
     }
+
+    public void getAllFirmy(){
+        listaFirmNazwy = new ArrayList<String>();
+        final Session session = getSession();
+        session.beginTransaction();
+
+        Query query = session.createSQLQuery("SELECT * from firmy").addEntity(Firmy.class);
+        listaFirm = (ArrayList<Firmy>) query.list();
+        session.close();
+
+        System.out.println("POBRAŁEM Z BAZY LISTE firm");
+
+        for(Firmy f : listaFirm) {
+            listaFirmNazwy.add(f.getNazwa());
+            System.out.println(f.getNazwa());
+        }
+
+    }
+
+
+
 
     public ArrayList<Potrawy> getPotrawyDb(){
         System.out.println("bede pobieral z BAZY potrawy");
@@ -837,6 +892,16 @@ public int getKategorieId(String k){
         setZmianaHasla(false);
         return null;
 
+    }
+
+
+    public void wniosekOPotracanie() {
+        final Session session = getSession();
+        zalogowanyUser.setPlatnosc("potracanie z wyplat");
+        session.beginTransaction();
+        session.update(zalogowanyUser);
+        session.getTransaction().commit();
+        session.close();
     }
 
     //    public SurveysEntity getSurveyForName(String name){

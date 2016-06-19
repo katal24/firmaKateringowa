@@ -20,9 +20,10 @@
         <mapping class="baza.Zamowienia"/>
         <mapping class="baza.ZawartoscZamowienia"/>
         <mapping class="model.Zamowienie"/>
+        <mapping class="baza.Firmy"/>
 
-        <!--<mapping class="main.java.model.SurveysEntity"/>-->
-        <!--<mapping class="main.java.model.User"/>-->
+        <!--<mapping class="main.model.SurveysEntity"/>-->
+        <!--<mapping class="main.model.User"/>-->
         <!--DB schema will be updated if needed -->
         <!--<property name="hbm2ddl.auto">update</property> -->
     </session-factory>

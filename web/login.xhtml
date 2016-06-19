@@ -16,7 +16,8 @@
 
         <h2>Zaloguj się, aby rozpocząć</h2>
 
-        <form id="formLogin" method="post" action="j_security_check">
+        <h:form id="formLogin">
+            <!--method="post" action="j_security_check">-->
             <h:panelGrid columns="2">
 
                 <h:outputLabel for="j_username" value="Username: "/>
@@ -27,11 +28,12 @@
                 <h:inputSecret value="#{bean1.password}" id="j_password" required="true" requiredMessage="Wypelnij to pole"/>
 
 
-                <h:commandButton type="submit" value="Zaloguj się"/>
-                <h:commandButton type="reset" value="Wyczyść"/>
+                <h:commandButton  action="#{bean1.action()}"  value="Zaloguj się"  />
 
-            </h:panelGrid>
-        </form>
+                <!--<h:commandButton type="reset" value="Wyczyść"/>-->
+
+            </h:panelGrid   >
+        </h:form>
 
         <h3>Nie masz jeszcze konta?</h3>
 
@@ -53,9 +55,14 @@
                 <h:inputText value="#{user.imie}" id="j_imie" required="true" requiredMessage="Wypełnij to pole"/>
                 <h:message for="j_imie"/>
 
+                <h:outputLabel for="j_email" value="E-mail: "/>
+                <h:inputText value="#{user.mail}" id="j_email" required="true" requiredMessage="Wypełnij to pole"/>
+                <h:message for="j_email"/>
+
                 <h:outputLabel for="j_firma" value="Firma: "/>
-                <h:inputText value="#{user.firma}" id="j_firma" required="true" requiredMessage="Wypełnij to pole"/>
-                <h:message for="j_firma"/>
+                <h:selectOneMenu id="j_firma" value="#{user.firma}">
+                    <f:selectItems value="#{db.listaFirmNazwy}" />
+                </h:selectOneMenu>
                 <h:commandButton value="Zarejestruj" action="#{db.addUser(user)}"/>
             </h:panelGrid>
 

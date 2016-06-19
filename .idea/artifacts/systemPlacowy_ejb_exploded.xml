@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ejb" name="systemPlacowy:ejb exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/systemPlacowy_ejb_exploded.rar</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="systemPlacowy/ejb/EJB" />
+      <element id="module-output" name="systemPlacowy" />
+    </root>
+  </artifact>
+</component>

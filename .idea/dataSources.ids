@@ -7,6 +7,13 @@
     </database-info>
     <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
     <schema name="" catalog="talaga1"/>
+    <table name="firmy" schema="" catalog="talaga1" type="TABLE">
+      <column name="id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="Nazwa" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mail" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="true" columns="id"/>
+    </table>
     <table name="katalog" schema="" catalog="talaga1" type="TABLE">
       <column name="id" sqlType="BIGINT UNSIGNED" precision="20" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
       <column name="idZamowienia" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
@@ -48,6 +55,10 @@
       <primary-key name="PRIMARY" columns="idskladnika"/>
       <index name="idskladnika" unique="true" columns="idskladnika"/>
       <index name="fk_skl" unique="false" columns="idpotrawy"/>
+    </table>
+    <table name="user_roles" schema="" catalog="talaga1" type="TABLE">
+      <column name="username" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="role" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
     </table>
     <table name="users" schema="" catalog="talaga1" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
