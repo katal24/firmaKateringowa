@@ -81,3 +81,5 @@ public class User implements Serializable {
         isLogged = logged;
     }
 }
+
+

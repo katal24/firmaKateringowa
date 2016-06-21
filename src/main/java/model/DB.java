@@ -62,6 +62,14 @@ public class DB{
     private ArrayList<String> listaFirmNazwy;
     public static String zDb = "aleAkcja z DB :)";
 
+    public static String getzDb() {
+        return zDb;
+    }
+
+    public static void setzDb(String zDb) {
+        DB.zDb = zDb;
+    }
+
     public ArrayList<String> getListaFirmNazwy() {
         return listaFirmNazwy;
     }

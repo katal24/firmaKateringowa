@@ -16,22 +16,23 @@
 
         <h2>Zaloguj się, aby rozpocząć</h2>
 
-        <h:form id="formLogin">
-            <!--method="post" action="j_security_check">-->
+        <h:form method="post" action="j_security_check" name="loginForm">
             <h:panelGrid columns="2">
 
-                <h:outputLabel for="j_username" value="Username: "/>
-                <h:inputText value="#{bean1.username}" id="j_username" required="true" requiredMessage="Wypełnij to pole"/>
+                <h:outputLabel for="j_username" value="Usernameee: "/>
+                <h:inputText id="j_username"/>
 
 
-                <h:outputLabel for="j_password" value="Password: "/>
-                <h:inputSecret value="#{bean1.password}" id="j_password" required="true" requiredMessage="Wypelnij to pole"/>
+                <h:outputLabel for="j_password" value="Passworddd: "/>
+                <h:inputSecret id="j_password"/>
+
+                <h:panelGroup>
+                <h:commandButton type="submit"  value="Zaloguj się"  />
 
 
-                <h:commandButton  action="#{bean1.action()}"  value="Zaloguj się"  />
 
-                <!--<h:commandButton type="reset" value="Wyczyść"/>-->
-
+                <h:commandButton type="reset" value="Wyczyść"/>
+                </h:panelGroup>
             </h:panelGrid   >
         </h:form>
 
@@ -74,7 +75,10 @@
 
 
 
+        <!--<h:inputText value="#{bean1.username}" id="j_username" required="true" requiredMessage="Wypełnij to pole"/>-->
 
+        <!--<h:inputSecret value="#{bean1.password}" id="j_password" required="true" requiredMessage="Wypelnij to pole"/>-->
+        <!--<h:commandButton  action="#{bean1.action()}"  value="Zaloguj się"  />-->
 
 
         <!--<h:message for="j_username"/>-->
