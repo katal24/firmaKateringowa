@@ -21,12 +21,14 @@
         <mapping class="baza.ZawartoscZamowienia"/>
         <mapping class="model.Zamowienie"/>
         <mapping class="baza.Firmy"/>
+        <mapping class="baza.UserRoles"/>
         <!--<mapping class="main.model.SurveysEntity"/>-->
         <!--<mapping class="main.model.User"/>-->
         <!--DB schema will be updated if needed -->
         <!--<property name="hbm2ddl.auto">update</property> -->
     </session-factory>
-</hibernate-configuration> <!--<security-constraint>-->
+</hibernate-configuration>
+<!--<security-constraint>-->
         <!--<web-resource-collection>-->
             <!--<web-resource-name>HtmlAuth</web-resource-name>-->
             <!--<description>zasady bezpieczeństwa aplikacji</description>-->

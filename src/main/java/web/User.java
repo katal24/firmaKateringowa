@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by dawid on 28.05.16.
@@ -22,9 +23,6 @@ public class User implements Serializable {
 
     public String action(){
 
-        //sprawdzic czy poprawne dane
-        //todo patrz wyzej
-
         Session session = DB.getSession();
         Query query = session.createQuery("select id from users u where u.username = :name and u.password = :pass").setString("name", this.getUsername()).setString("pass", this.getPassword());
 
@@ -32,11 +30,18 @@ public class User implements Serializable {
         System.out.println("ISLOGGED======" + isLogged);
 
         if(isLogged) {
+
+//            Query query = session.createSQLQuery("SELECT nazwa from kategorie");
+//            ArrayList<String> namesList = (ArrayList<String>) query.list();
+
+            Query roles =  session.createQuery("select role from user_roles u where u.username = :name").setString("name", this.getUsername());
+            ArrayList<String> rolesList = (ArrayList<String>) roles.list();
+            System.out.println(rolesList.get(0) + " to jest ROLA");
             DB.getUserFromBase((Integer) query.uniqueResult());
             System.out.println("PObrałem całego usera z bazy");
 
             session.close();
-            return "index.xhtml?faces-redirect=true";
+            return "admin/index.xhtml?faces-redirect=true";
 
         }
         else {
@@ -82,4 +87,28 @@ public class User implements Serializable {
     }
 }
 
+
+//
+//if(session == null && !(url.indexOf("login.xhtml")>=0)){
+//        System.out.println("Sesja jest nullem lub ide z loginu");
+////            if(url.indexOf("wypisz.xhtml") >=0 || url.indexOf("logout.xhtml") >=0 || url.indexOf("wypiszadmin.xhtml") >=0 || url.indexOf("index.xhtml") >=0){
+//        resp.sendRedirect(req.getServletContext().getContextPath() + "/login.xhtml");
+//        }
+//
+//        if(req.isUserInRole("Admin")){
+//        System.out.println("Wiem, ze jestem admin");
+//
+//        resp.sendRedirect(req.getServletContext().getContextPath() + "/admin/index.xhtml");
+//        } else
+//        if(req.isUserInRole("Manager")){
+//        resp.sendRedirect(req.getServletContext().getContextPath() + "/manager/index.xhtml");
+//        } else
+//        if(req.isUserInRole("User")){
+//        resp.sendRedirect(req.getServletContext().getContextPath() + "/user/index.xhtml");
+//        } else
+//        if(req.isUserInRole("Dostawca")){
+//        resp.sendRedirect(req.getServletContext().getContextPath() + "/dostawca/index.xhtml");
+//        } else{
+//        filterChain.doFilter(servletRequest, servletResponse);
+//        }
 

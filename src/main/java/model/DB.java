@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.awt.*;
 import java.io.IOException;
@@ -1016,6 +1017,7 @@ public class DB{
         session.getTransaction().commit();
         session.close();
     }
+
 
     //    public SurveysEntity getSurveyForName(String name){
 //        System.out.println("bede pobieral z BAZY dla danej nazwy");

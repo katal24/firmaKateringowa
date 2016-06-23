@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>e-Kantor</title>
+</h:head>
+
+<h:body>
+    <f:view>
+        <a href="logout.xhtml">WYLOGUJ</a>
+
+        <h3>Najczęściej wybierane</h3>
+        <h:form id="myform">
+
+            <h:panelGrid columns="1">
+
+                <h:dataTable id="potrawyList" value="#{db.topTen}" var="potrawa">
+                    <h:column>
+                        <f:facet name="header">Danie</f:facet>
+                        <h:outputText id="potrawa1" value="#{potrawa.nazwaPotrawy}"/>
+                    </h:column>
+
+                    <h:column>
+                        <h:commandButton value="Pokaż szczegóły" action="#{db.wybierzPotrawe(potrawa)}" >
+                            <f:ajax render=":myform:potrawa :myform:pot1" />
+                        </h:commandButton>
+                    </h:column>
+
+                </h:dataTable>
+                <br/><br/>
+
+
+                <h:outputText id="pot1" value="#{db.wybranaPotrawa}"/>
+                <h:dataTable id = "potrawa" value="#{db.listSkladnikowPotrawy}" var="skladnik">
+                    <h:column>
+                        - #{skladnik.nazwaSkladnika}
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="     (#{skladnik.ilosc})"/>
+                    </h:column>
+                </h:dataTable>
+
+                <br/><br/>
+
+                <h:commandButton value="Pokaż ofertę dnia" action="#{db.setOfertaPotraw()}">
+                    <f:ajax render="@form"/>
+                </h:commandButton>
+
+                <h:dataTable id="oferta" value="#{db.oferta}" var="potrawa2" rendered="#{db.ofertaShow}">
+                    <h:column>
+                        <f:facet name="header">Danie</f:facet>
+                        <h:outputText id="potrawa3" value="#{potrawa2.nazwaPotrawy}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Cena</f:facet>
+                        <h:outputText id="potrawa4" value="#{potrawa2.cena}"/>
+                    </h:column>
+
+                </h:dataTable>
+
+            </h:panelGrid>
+
+        </h:form>
+
+        <p>
+            <h:outputText value="______________________________" style="vertical-align:super;"/><br/>
+            <a href="index.xhtml">MENU LABORATORIUM</a>
+        </p>
+
+    </f:view>
+</h:body>
+</html>

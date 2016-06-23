@@ -13,10 +13,10 @@
 
 <h:body>
     <f:view>
-        <a href="logout.xhtml">WYLOGUJ</a>  <a href="edit.xhtml">MÓJ PROFIL</a>
+        <!--<a href="logout.xhtml">WYLOGUJ</a>  <a href="edit.xhtml">MÓJ PROFIL</a>&ndash;&gt;-->
 
         <h2>Witaj #{db.zalogowanyUser.imie}!</h2>
-
+AAAAADDDDDDDMIIIIIIIINNNNNNNNNNN
 
         <h:form>
             <h:commandButton id="startButton" value="Pokaż menu" action="#{db.update()}"/><br/><br/>
@@ -27,7 +27,7 @@
 
             <h:commandButton id="Mail" value="Wyślij maila" action="#{mail.sendMail()}"/><br/><br/>
 
-
+            <h:commandButton id="log" value="WYLOGUJ" action="#{filter.setLogout(true)}"/><br/><br/>
         </h:form>
 
 

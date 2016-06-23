@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Witaj</title>
+</h:head>
+
+<h:body>
+    <f:view>
+        <a href="logout.xhtml">WYLOGUJ</a>   <a href="index.xhtml">STRONA GŁÓWNA</a>
+
+
+        <h:form id="formLogin">
+            <h:panelGrid columns="1">
+
+                <f:facet name="header">
+                    Twoje dane
+                </f:facet>
+
+                <h:outputLabel value="Imie i nazwisko: #{db.zalogowanyUser.imie}"/>
+                <h:outputLabel value="Firma: #{db.zalogowanyUser.firma}"/>
+                <h:outputLabel rendered="#{db.zalogowanyUser.platnosc.equals('potracanie z wyplat')}" value="Obciążenie pensji: #{db.zalogowanyUser.doZaplaty}0 zł"/>
+                <h:outputLabel value="Login: #{db.zalogowanyUser.username}"/>
+
+                <h:commandButton value="Złóż wniosek na potrzeby potrącania z wypłat " action="#{db.wniosekOPotracanie()}" rendered="#{not db.zalogowanyUser.platnosc.equals('potracanie z wyplat')}">
+                    <f:ajax render="@form"/>
+                </h:commandButton>
+
+                <h:commandButton value="Zrezygnuj z potrącania kosztów z wypłat " action="#{db.usunWniosekOPotracanie()}" rendered="#{db.zalogowanyUser.platnosc.equals('potracanie z wyplat')}">
+                    <f:ajax render="@form"/>
+                </h:commandButton>
+
+                <h:commandButton value="Zmień hasło" action="#{db.setZmianaHasla(true)}">
+                    <f:ajax render="@form"/>
+                </h:commandButton>
+            </h:panelGrid>
+            <h:panelGrid columns="3">
+                <h:outputText rendered="#{db.zmianaHasla}" value="Nowe hasło"/>
+                <h:inputSecret rendered="#{db.zmianaHasla}" value="#{db.zalogowanyUser.password}" id="j_username" required="true" requiredMessage="Wprowadź nowe hasło"/>
+                <h:message for="j_username"/>
+
+                <h:commandButton rendered="#{db.zmianaHasla}" value="Zapisz" action="#{db.updateZalogowanyUser()}"/>
+                <h:commandButton rendered="#{db.zmianaHasla}" value="Anuluj" action="#{db.setZmianaHasla(false)}">
+                    <f:ajax render="@form"/>
+                </h:commandButton>
+            </h:panelGrid>
+
+        </h:form>
+        <p>
+            <h:outputText value="______________________________" style="vertical-align:super;"/><br/>
+            <a href="index.xhtml">MENU LABORATORIUM</a>
+        </p>
+    </f:view>
+</h:body>
+</html>
+
+
+
+
+
+
+

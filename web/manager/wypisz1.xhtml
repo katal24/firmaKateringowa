@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>e-Kantor</title>
+</h:head>
+
+<h:body>
+    <f:view>
+        <a href="logout.xhtml">WYLOGUJ</a>
+
+        <h3>Wybierz posiłek na dziś managerze piekny!</h3>
+        <h:form id="myform">
+
+            <h:panelGrid columns="1">
+                <h:commandButton id="koszykBUtton" value="Przejdź do koszyka" action="#{koszyk.pokaz}"/><br/>
+
+
+                <b>Wybierz kategorie</b>
+                <h:selectOneMenu value="#{db.kategoriaMenu}">
+                    <f:selectItems value="#{db.kategoriesNames}" />
+                    <f:ajax render="potrawyList"/>
+                </h:selectOneMenu> <br/><br/>
+
+                <h:dataTable id="potrawyList" value="#{db.potrawyMenu}" var="potrawa">
+                    <h:column>
+                        <f:facet name="header">Danie</f:facet>
+                        <h:outputText id="potrawa1" value="#{potrawa.nazwaPotrawy}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Cena</f:facet>
+                        <h:outputText value="     (#{potrawa.cena} zł)">
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <h:commandButton value="Pokaż szczegóły" action="#{db.wybierzPotrawe(potrawa)}" >
+                            <f:ajax render=":myform:potrawa :myform:pot1" />
+                        </h:commandButton>
+                    </h:column>
+                    <h:column>
+                        <h:commandButton value="Dodaj do koszyka" action="#{koszyk.dodajDoKoszyka(potrawa)}" />
+                    </h:column>
+                </h:dataTable>
+                <br/><br/>
+
+
+               <h:outputText id="pot1" value="#{db.wybranaPotrawa}"/>
+                <h:dataTable id = "potrawa" value="#{db.listSkladnikowPotrawy}" var="skladnik">
+                    <h:column>
+                        - #{skladnik.nazwaSkladnika}
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="     (#{skladnik.ilosc})"/>
+                    </h:column>
+                </h:dataTable>
+
+
+                <!--<h:selectOneMenu id="potrawyList" value="">-->
+                <!--<f:selectItems value="#{db.potrawyNames}" />-->
+                <!--</h:selectOneMenu>-->
+
+
+                <!--<h:message style="color: red" for="ile"/>-->
+
+                <!--<h:outputLabel value="Zamien na "/>-->
+                <!--<h:selectOneMenu id="waluta2" value="#{waluta.waluta2}">-->
+                <!--<f:selectItems value="#{waluta.waluty}" />-->
+                <!--</h:selectOneMenu>-->
+                <!--<h:message style="color: red" for="ile"/>-->
+
+
+            </h:panelGrid>
+            <!--<h:commandButton id="startButton" value="Zamien" action="#{waluta.login()}"/><br/><br/>-->
+            <!--<h:commandButton value="Dodaj walute" action="dodajWalute.xhtml"/>-->
+
+
+        </h:form>
+
+        <p>
+            <h:outputText value="______________________________" style="vertical-align:super;"/><br/>
+            <a href="index.xhtml">MENU LABORATORIUM</a>
+        </p>
+
+    </f:view>
+</h:body>
+</html>
+
+
+
+
