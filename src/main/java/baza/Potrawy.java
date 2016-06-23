@@ -4,20 +4,34 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Created by dawid on 06.06.16.
  */
+@XmlRootElement
 @Entity(name="potrawy")
 public class Potrawy {
-    private long id;
-    private long idkategoria;
-    private String nazwaPotrawy;
-    private double cena;
-    private int ileZamowien;
-    private boolean editable;
-    private String isInMenu;
-    private String zamawiajacy;
+   @XmlElement private long id;
+    @XmlElement private long idkategoria;
+    @XmlElement private String nazwaPotrawy;
+    @XmlElement  private double cena;
+    @XmlElement  private int ileZamowien;
+    @XmlElement  private boolean editable;
+    @XmlElement  private String isInMenu;
+    @XmlElement  private String zamawiajacy;
+
+
+    public Potrawy(long idkategoria, String nazwaPotrawy, double cena) {
+        this.idkategoria = idkategoria;
+        this.nazwaPotrawy = nazwaPotrawy;
+        this.cena = cena;
+        this.isInMenu = "0";
+    }
+
+    public Potrawy() {
+    }
 
     @Id
     @Column(name = "id")
@@ -118,5 +132,17 @@ public class Potrawy {
 
     }
 
-
+    @Override
+    public String toString() {
+        return "Potrawy{" +
+                "id=" + id +
+                ", idkategoria=" + idkategoria +
+                ", nazwaPotrawy='" + nazwaPotrawy + '\'' +
+                ", cena=" + cena +
+                ", ileZamowien=" + ileZamowien +
+                ", editable=" + editable +
+                ", isInMenu='" + isInMenu + '\'' +
+                ", zamawiajacy='" + zamawiajacy + '\'' +
+                '}';
+    }
 }

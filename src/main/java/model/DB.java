@@ -530,7 +530,6 @@ public int getKategorieId(String k){
     return id;
 }
 
-
     public int getPotrawyId(String k){
         final Session session = getSession();
         session.beginTransaction();
@@ -599,7 +598,7 @@ public int getKategorieId(String k){
         po.setEditable(false);
         final Session session = getSession();
         session.beginTransaction();
-        System.out.println("ZAPISUJE DO BAZY potrawe " + po.getIdkategoria());
+        System.out.println("ZAPISUJE DO BAZY potrawe " + po.getId());
         session.update(po);
         session.getTransaction().commit();
         session.close();
@@ -766,6 +765,14 @@ public int getKategorieId(String k){
         nowa.setCena(this.cena);
         nowa.setNazwaPotrawy(this.nazwaPotrawy);
         nowa.setIdkategoria(id);
+        addPotraweToBase(nowa);
+        dodajPotrawe = !dodajPotrawe;
+
+        return null;
+    }
+
+
+    public String addPotrawe(Potrawy nowa) {
         addPotraweToBase(nowa);
         dodajPotrawe = !dodajPotrawe;
 

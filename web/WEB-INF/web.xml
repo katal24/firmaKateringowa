@@ -15,14 +15,14 @@
     <url-pattern>*.xhtml</url-pattern>
 </servlet-mapping>
 
-<filter>
-    <filter-name>LoggingFilter</filter-name>
-    <filter-class>filters.loginFilters</filter-class>
-</filter>
-<filter-mapping>
-    <filter-name>LoggingFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-</filter-mapping>
+<!--<filter>-->
+    <!--<filter-name>LoggingFilter</filter-name>-->
+    <!--<filter-class>filters.loginFilters</filter-class>-->
+<!--</filter>-->
+<!--<filter-mapping>-->
+    <!--<filter-name>LoggingFilter</filter-name>-->
+    <!--<url-pattern>/*</url-pattern>-->
+<!--</filter-mapping>-->
 
 
     <context-param>
@@ -54,7 +54,7 @@
     <login-config>
 
         <auth-method>FORM</auth-method>
-        <realm-name>file</realm-name>
+        <!--<realm-name>file</realm-name>-->
         <form-login-config>
             <form-login-page>/login.xhtml</form-login-page>
             <form-error-page>/logout.xhtml</form-error-page>
