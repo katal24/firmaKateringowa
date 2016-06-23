@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
-    <security-domain>java:/jaas/mysqldomain</security-domain>
+    <security-domain>mysqldomain</security-domain>
+
+    <!--<security-domain>java:/jaas/mysqldomain</security-domain>-->
 
 </jboss-web>

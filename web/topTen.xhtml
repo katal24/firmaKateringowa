@@ -45,25 +45,26 @@
                     </h:column>
                 </h:dataTable>
 
+                <br/><br/>
 
-                <!--<h:selectOneMenu id="potrawyList" value="">-->
-                <!--<f:selectItems value="#{db.potrawyNames}" />-->
-                <!--</h:selectOneMenu>-->
+                <h:commandButton value="Pokaż ofertę dnia" action="#{db.setOfertaPotraw()}">
+                    <f:ajax render="@form"/>
+                </h:commandButton>
 
+                <h:dataTable id="oferta" value="#{db.oferta}" var="potrawa2" rendered="#{db.ofertaShow}">
+                    <h:column>
+                        <f:facet name="header">Danie</f:facet>
+                        <h:outputText id="potrawa3" value="#{potrawa2.nazwaPotrawy}"/>
+                    </h:column>
 
-                <!--<h:message style="color: red" for="ile"/>-->
+                    <h:column>
+                        <f:facet name="header">Cena</f:facet>
+                        <h:outputText id="potrawa4" value="#{potrawa2.cena}"/>
+                    </h:column>
 
-                <!--<h:outputLabel value="Zamien na "/>-->
-                <!--<h:selectOneMenu id="waluta2" value="#{waluta.waluta2}">-->
-                <!--<f:selectItems value="#{waluta.waluty}" />-->
-                <!--</h:selectOneMenu>-->
-                <!--<h:message style="color: red" for="ile"/>-->
-
+                </h:dataTable>
 
             </h:panelGrid>
-            <!--<h:commandButton id="startButton" value="Zamien" action="#{waluta.login()}"/><br/><br/>-->
-            <!--<h:commandButton value="Dodaj walute" action="dodajWalute.xhtml"/>-->
-
 
         </h:form>
 

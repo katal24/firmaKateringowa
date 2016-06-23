@@ -10,8 +10,14 @@ import org.hibernate.service.ServiceRegistryBuilder;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.awt.*;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,10 +63,20 @@ public class DB{
     private ArrayList<ZamowienieKompletne> allZamowienia;
     private ArrayList<ZamowienieKompletne> allSubskrypcje;
     private ArrayList<Potrawy> topTen;
+    private ArrayList<Potrawy> oferta;
     private String kategoriaMenu;
     private ArrayList<Firmy> listaFirm;
     private ArrayList<String> listaFirmNazwy;
     public static String zDb = "aleAkcja z DB :)";
+    private boolean ofertaShow = false;
+
+    public boolean isOfertaShow() {
+        return ofertaShow;
+    }
+
+    public void setOfertaShow(boolean ofertaShow) {
+        this.ofertaShow = ofertaShow;
+    }
 
     public static String getzDb() {
         return zDb;
@@ -68,6 +84,14 @@ public class DB{
 
     public static void setzDb(String zDb) {
         DB.zDb = zDb;
+    }
+
+    public ArrayList<Potrawy> getOferta() {
+        return oferta;
+    }
+
+    public void setOferta(ArrayList<Potrawy> oferta) {
+        this.oferta = oferta;
     }
 
     public ArrayList<String> getListaFirmNazwy() {
@@ -307,7 +331,35 @@ public class DB{
         dajPotrawyMenu();
     }
 
+//    public void browse(String miejsce) throws URISyntaxException, IOException {
+//        java.awt.Desktop.getDesktop().browse(new URI("https://www.google.pl"));
+//    }
 
+    public static void openWebpage(URI uri) throws URISyntaxException {
+//        URI uri = new URI("https://www.google.pl");
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                desktop.browse(uri);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void browse(String miejsce) throws IOException, URISyntaxException {
+        String uri = "https://www.google.pl/maps/place/";
+        String[] miejsca = miejsce.split(" ");
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+        for(int i=0; i<miejsca.length-1; i++){
+            uri += miejsca[i];
+            uri += "+";
+        }
+            uri += miejsca[miejsca.length-1];
+        response.sendRedirect(uri);
+
+    }
 
     public String update(){
         updateKategories1();
@@ -505,6 +557,18 @@ public class DB{
         return "topTen";
     }
 
+
+    public String setOfertaPotraw(){
+        final Session session = getSession();
+        session.beginTransaction();
+        Query query = session.createSQLQuery("select * from potrawy where isInMenu=2").addEntity(Potrawy.class);
+        oferta = (ArrayList<Potrawy>) query.list();
+        session.close();
+        System.out.println(oferta + "size:  " + oferta.size());
+        ofertaShow = true;
+        return null;
+    }
+
     public ArrayList<String> getNamePotrawy(){
         final Session session = getSession();
         session.beginTransaction();
@@ -516,19 +580,19 @@ public class DB{
         return namesList;
     }
 
-public int getKategorieId(String k){
-    final Session session = getSession();
-    session.beginTransaction();
-    System.out.println("aassss id = ");
+    public int getKategorieId(String k){
+        final Session session = getSession();
+        session.beginTransaction();
+        System.out.println("aassss id = ");
 
 
-    Query query = session.createSQLQuery("SELECT id from kategorie where nazwa='"+k+"'");
-    int id = ((BigInteger) query.list().get(0)).intValue();
-    System.out.println("aa id = " + id);
+        Query query = session.createSQLQuery("SELECT id from kategorie where nazwa='"+k+"'");
+        int id = ((BigInteger) query.list().get(0)).intValue();
+        System.out.println("aa id = " + id);
 
-    session.close();
-    return id;
-}
+        session.close();
+        return id;
+    }
 
     public int getPotrawyId(String k){
         final Session session = getSession();
@@ -554,7 +618,7 @@ public int getKategorieId(String k){
         final Session session = getSession();
         session.beginTransaction();
 
-        Query query = session.createSQLQuery("SELECT * from potrawy where idkategoria= (SELECT id from kategorie where nazwa='"+kategoria+"') and isInMenu=1").addEntity(Potrawy.class);
+        Query query = session.createSQLQuery("SELECT * from potrawy where idkategoria= (SELECT id from kategorie where nazwa='"+kategoria+"') and isInMenu!=0").addEntity(Potrawy.class);
         ArrayList<Potrawy> list = (ArrayList<Potrawy>) query.list();
         session.close();
         return list;
@@ -639,7 +703,7 @@ public int getKategorieId(String k){
         session.beginTransaction();
         for(String zamawia : zamawiaja){
             if(!zamawia.equals("null")) {
-                Query query = session.createSQLQuery("SELECT mail from users where login='" + zamawia + "'");
+                Query query = session.createSQLQuery("SELECT mail from users where username='" + zamawia + "'");
                 String mail = ((String) query.list().get(0).toString());
                 mails.add(mail);
             }
@@ -659,6 +723,20 @@ public int getKategorieId(String k){
         return null;
     }
 
+
+    public String deletePotrawyFromOferta(Potrawy p){
+        final Session session = getSession();
+        session.beginTransaction();
+        p.setIsInMenu("1");
+        session.update(p);
+        session.getTransaction().commit();
+        session.close();
+
+
+        return null;
+    }
+
+
     public String addPotrawyToMenu(Potrawy p){
         p.setIsInMenu("1");
         final Session session = getSession();
@@ -668,6 +746,17 @@ public int getKategorieId(String k){
         session.close();
         return null;
     }
+
+    public String addPotrawyToOferta(Potrawy p){
+        p.setIsInMenu("2");
+        final Session session = getSession();
+        session.beginTransaction();
+        session.update(p);
+        session.getTransaction().commit();
+        session.close();
+        return null;
+    }
+
 
 
     public String editKategorie(Kategorie k) {
@@ -752,7 +841,7 @@ public int getKategorieId(String k){
         Zamowienia zmieniana = (Zamowienia) session.get(Zamowienia.class, zk.getZamowienie().getId());
         session.delete(zmieniana);
         if(!session.getTransaction().wasCommitted())
-        session.getTransaction().commit();
+            session.getTransaction().commit();
 
         session.close();
         return null;
@@ -809,7 +898,7 @@ public int getKategorieId(String k){
 //        kategories.add(nowa);
         dodajKategorie = !dodajKategorie;
 //        pokaz();
-         return null;
+        return null;
     }
 
     public void addKategorieToBase(Kategorie nowa){
@@ -913,6 +1002,15 @@ public int getKategorieId(String k){
     public void wniosekOPotracanie() {
         final Session session = getSession();
         zalogowanyUser.setPlatnosc("potracanie z wyplat");
+        session.beginTransaction();
+        session.update(zalogowanyUser);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void usunWniosekOPotracanie() {
+        final Session session = getSession();
+        zalogowanyUser.setPlatnosc("gotowka");
         session.beginTransaction();
         session.update(zalogowanyUser);
         session.getTransaction().commit();

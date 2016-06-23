@@ -71,7 +71,10 @@ public class Koszyk {
         rodzajZamowienia = new ArrayList<String>();
         statusy = new ArrayList<String>();
 
-        sposobZaplaty.add("odliczenie od pensji");
+
+        if(DB.getStricZalogowanyUser().getPlatnosc().equals("potracanie z wyplat")){
+            sposobZaplaty.add("odliczenie od pensji");
+        }
         sposobZaplaty.add("platnosc gotowka");
 
         rodzajZamowienia.add("jednorazowe");

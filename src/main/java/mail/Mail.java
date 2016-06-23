@@ -96,11 +96,11 @@ public class Mail {
                 message.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
 
-            message.setSubject("Rozlicznie: "+ to[0]);
+            message.setSubject("Firma Kateringowa: Talarek: "+ to[0]);
             if(potrawa.equals("rozliczenie")){
                 message.setText(to[0] + " - pracownik państwa firmy w ostatnim czasie dokonał zamówień na kwotę " + potrawa + " została usunięta z menu. Zachęcamy do złożenia nowego zamówienia!");
             }
-            message.setText("Potrawa, którą subskrybujesz " + potrawa + " została usunięta z menu. Zachęcamy do złożenia nowego zamówienia!");
+            message.setText("Potrawa, którą subskrybujesz '" + potrawa + "' została usunięta z menu. Zachęcamy do złożenia nowego zamówienia!");
 
             Transport transport = session.getTransport("smtp");
             transport.connect(host, from, pass);

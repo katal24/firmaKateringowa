@@ -85,6 +85,11 @@
                         <h:commandLink value="Dodaj do menu" action="#{db.addPotrawyToMenu(pot)}" rendered="#{!pot.isInMenu.equals('1')}" />
 
                     </p:column>
+                    <p:column>
+                        <h:commandLink value="Usun z oferty dnia" action="#{db.deletePotrawyFromMenu(pot)}" rendered="#{pot.isInMenu.equals('2')}" />
+                        <h:commandLink value="Dodaj do oferty dnia" action="#{db.addPotrawyToOferta(pot)}" rendered="#{!pot.isInMenu.equals('2')}" />
+
+                    </p:column>
                 </p:dataTable>
 
                 <!--DODAWANIE POTRAWY-->

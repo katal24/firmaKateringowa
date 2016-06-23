@@ -68,6 +68,10 @@
                     <h:inputTextarea value="#{zamowienie.zamowienie.notatka}" rendered="#{zamowienie.editable}"/>
                 </p:column>
                 <p:column>
+                    <f:facet name="header">Dojazd</f:facet>
+                    <h:commandLink value="Pokaż szczegóły dojazdu" action="#{db.browse(zamowienie.zamowienie.miejsce)}" />
+                </p:column>
+                <p:column>
                     <f:facet name="header">Edytuj</f:facet>
                     <h:commandLink value="Edytuj" action="#{db.editZamowienie(zamowienie)}" rendered="#{not zamowienie.editable}" >
                         <f:actionListener binding="#{koszyk.przygotujZlecenie()}"/>
@@ -118,6 +122,12 @@
                     <f:facet name="header">Płatność</f:facet>
                     <h:outputText value="#{zamowienie.zamowienie.platnosc}"/>
                 </p:column>
+                <p:column>
+                    <f:facet name="header">Notatka</f:facet>
+                    <h:outputText value="#{zamowienie.zamowienie.notatka}" rendered="#{not zamowienie.editable}"/>
+                    <h:inputTextarea value="#{zamowienie.zamowienie.notatka}" rendered="#{zamowienie.editable}"/>
+                </p:column>
+
                 <p:column>
                     <f:facet name="header">Notatka</f:facet>
                     <h:outputText value="#{zamowienie.zamowienie.notatka}" rendered="#{not zamowienie.editable}"/>

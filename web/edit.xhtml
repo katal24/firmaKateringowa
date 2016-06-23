@@ -32,6 +32,10 @@
                     <f:ajax render="@form"/>
                 </h:commandButton>
 
+                <h:commandButton value="Zrezygnuj z potrącania kosztów z wypłat " action="#{db.usunWniosekOPotracanie()}" rendered="#{db.zalogowanyUser.platnosc.equals('potracanie z wyplat')}">
+                    <f:ajax render="@form"/>
+                </h:commandButton>
+
                 <h:commandButton value="Zmień hasło" action="#{db.setZmianaHasla(true)}">
                     <f:ajax render="@form"/>
                 </h:commandButton>
