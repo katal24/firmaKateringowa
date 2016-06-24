@@ -12,7 +12,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.awt.*;
 import java.io.IOException;
@@ -63,7 +62,7 @@ public class DB{
     private boolean zmianaHasla = false;
     private ArrayList<ZamowienieKompletne> allZamowienia;
     private ArrayList<ZamowienieKompletne> allSubskrypcje;
-    private ArrayList<Potrawy> topTen;
+    private static ArrayList<Potrawy> topTen;
     private ArrayList<Potrawy> oferta;
     private String kategoriaMenu;
     private ArrayList<Firmy> listaFirm;
@@ -549,13 +548,13 @@ public class DB{
         return list;
     }
 
-    public String setTopTenPotraw(){
+    public static void setTopTenPotraw(){
         final Session session = getSession();
         session.beginTransaction();
         Query query = session.createSQLQuery("select * from potrawy ORDER BY ileZamowien desc limit 10").addEntity(Potrawy.class);
         topTen = (ArrayList<Potrawy>) query.list();
         session.close();
-        return "topTen";
+        //return "user/topTen.xhtml";
     }
 
 
@@ -616,6 +615,7 @@ public class DB{
     }
 
     public ArrayList<Potrawy> getPotrawyMenuInKategoria(String kategoria){
+        System.out.println("biore potrawy ------------------------------------------------");
         final Session session = getSession();
         session.beginTransaction();
 

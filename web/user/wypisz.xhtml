@@ -11,9 +11,14 @@
 </h:head>
 
 <h:body>
-    <f:view>
-        <a href="logout.xhtml">WYLOGUJ</a>
+    <h:form>
+        <h:commandButton id="startButton" value="   Menu   " action="#{db.update()}"/>
+        <h:commandButton id="zamowieniaMojeButton" value="   Strona główna   " action="index.xhtml"/>
+        <h:commandButton id="profilButton" value="   Profil  " action="edit.xhtml"/><br/><br/>
+        <!--<h:commandButton id="topTenButon" value="Pokaż najczęściej zamawiane" action="#{db.setTopTenPotraw()}"/><br/><br/>-->
+    </h:form>
 
+    <f:view>
         <h3>Wybierz posiłek na dziś!</h3>
         <h:form id="myform">
 
@@ -24,7 +29,7 @@
                 <b>Wybierz kategorie</b>
                 <h:selectOneMenu value="#{db.kategoriaMenu}">
                     <f:selectItems value="#{db.kategoriesNames}" />
-                    <f:ajax render="potrawyList"/>
+                    <f:ajax render="@form"/>
                 </h:selectOneMenu> <br/><br/>
 
                 <h:dataTable id="potrawyList" value="#{db.potrawyMenu}" var="potrawa">

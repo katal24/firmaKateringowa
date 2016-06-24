@@ -12,9 +12,14 @@
 </h:head>
 
 <h:body>
-    <f:view>
-        <a href="logout.xhtml">WYLOGUJ</a>   <a href="index.xhtml">STRONA GŁÓWNA</a>
+    <h:form>
+        <h:commandButton id="startButton" value="   Menu   " action="#{db.update()}"/>
+        <h:commandButton id="zamowieniaMojeButton" value="   Strona główna   " action="index.xhtml"/>
+        <h:commandButton id="profilButton" value="   Zamówienia  " action="#{db.gotoMojeZamowienia()}"/><br/><br/>
+        <!--<h:commandButton id="topTenButon" value="Pokaż najczęściej zamawiane" action="#{db.setTopTenPotraw()}"/><br/><br/>-->
+    </h:form>
 
+    <f:view>
 
         <h:form id="formLogin">
             <h:panelGrid columns="1">

@@ -15,20 +15,75 @@
     <f:view>
         <!--<a href="logout.xhtml">WYLOGUJ</a>  <a href="edit.xhtml">MÓJ PROFIL</a>-->
 
-        <h2>Witaj #{db.zalogowanyUser.imie}!</h2>
-        UUUUSSSSEEEEERRRRRR
-
         <h:form>
-            <h:commandButton id="startButton" value="Pokaż menu" action="#{db.update()}"/><br/><br/>
-            <h:commandButton id="adminButton" value="Przejdź do konsoli admina" action="#{db.gotoadmin()}"/><br/><br/>
-            <h:commandButton id="zamowieniaButton" value="Pokaż wszystkie zamówienia" action="#{db.gotoZamowienia()}"/><br/><br/>
-            <h:commandButton id="zamowieniaMojeButton" value="Pokaż moje zamówienia" action="#{db.gotoMojeZamowienia()}"/><br/><br/>
-            <h:commandButton id="topTenButon" value="Pokaż najczęściej zamawiane" action="#{db.setTopTenPotraw()}"/><br/><br/>
+            <h:commandButton id="startButton" value="   Menu   " action="#{db.update()}"/>
+            <h:commandButton id="zamowieniaMojeButton" value="   Zamówienia   " action="#{db.gotoMojeZamowienia()}"/>
+            <h:commandButton id="profilButton" value="   Profil  " action="edit.xhtml"/><br/><br/>
+            <!--<h:commandButton id="topTenButon" value="Pokaż najczęściej zamawiane" action="#{db.setTopTenPotraw()}"/><br/><br/>-->
+        </h:form>
 
-            <h:commandButton id="Mail" value="Wyślij maila" action="#{mail.sendMail()}"/><br/><br/>
+        <h2>Witaj user #{db.zalogowanyUser.imie}!</h2>
 
+        <h:form id="myform">
+
+            <h:panelGrid columns="1">
+
+                <h:dataTable id="potrawyList" value="#{db.topTen}" var="potrawa">
+                    <h:column>
+                        <f:facet name="header">Danie</f:facet>
+                        <h:outputText id="potrawa1" value="#{potrawa.nazwaPotrawy}"/>
+                    </h:column>
+
+                    <h:column>
+                        <h:commandButton value="Pokaż szczegóły" action="#{db.wybierzPotrawe(potrawa)}" >
+                            <f:ajax render=":myform:potrawa :myform:pot1" />
+                        </h:commandButton>
+                    </h:column>
+
+                </h:dataTable>
+                <br/><br/>
+
+
+                <h:outputText id="pot1" value="#{db.wybranaPotrawa}"/>
+                <h:dataTable id = "potrawa" value="#{db.listSkladnikowPotrawy}" var="skladnik">
+                    <h:column>
+                        - #{skladnik.nazwaSkladnika}
+                    </h:column>
+                    <h:column>
+                        <h:outputText value="     (#{skladnik.ilosc})"/>
+                    </h:column>
+                </h:dataTable>
+
+
+
+                <h:commandButton value="Pokaż ofertę dnia" action="#{db.setOfertaPotraw()}">
+                    <f:ajax render="@form"/>
+                </h:commandButton>
+
+                <h:outputText id="ofertaa" value="OFERTA DNIA" rendered="#{db.ofertaShow}"/>
+                <h:dataTable id="oferta" value="#{db.oferta}" var="potrawa2" rendered="#{db.ofertaShow}">
+                    <h:column>
+                        <f:facet name="header">Danie</f:facet>
+                        <h:outputText id="potrawa3" value="#{potrawa2.nazwaPotrawy}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Cena</f:facet>
+                        <h:outputText id="potrawa4" value="#{potrawa2.cena}0 zł"/>
+                    </h:column>
+
+                </h:dataTable>
+
+            </h:panelGrid>
 
         </h:form>
+
+
+        <!--<h:form>-->
+            <!--<h:commandButton id="startButton" value="Pokaż menu" action="#{db.update()}"/>-->
+            <!--<h:commandButton id="zamowieniaMojeButton" value="Pokaż moje zamówienia" action="#{db.gotoMojeZamowienia()}"/><br/><br/>-->
+            <!--&lt;!&ndash;<h:commandButton id="topTenButon" value="Pokaż najczęściej zamawiane" action="#{db.setTopTenPotraw()}"/><br/><br/>&ndash;&gt;-->
+        <!--</h:form>-->
 
 
         <p>

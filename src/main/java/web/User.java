@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by dawid on 28.05.16.
@@ -21,34 +20,55 @@ public class User implements Serializable {
     public boolean isLogged = false;
 
 
-    public String action(){
+    public void action(){
+
+        System.out.println(this.username + "::" + this.password);
+
 
         Session session = DB.getSession();
         Query query = session.createQuery("select id from users u where u.username = :name and u.password = :pass").setString("name", this.getUsername()).setString("pass", this.getPassword());
 
         isLogged = (query.uniqueResult() != null);
-        System.out.println("ISLOGGED======" + isLogged);
+        System.out.println("jestem tu ISLOGGED======" + isLogged);
 
         if(isLogged) {
 
 //            Query query = session.createSQLQuery("SELECT nazwa from kategorie");
 //            ArrayList<String> namesList = (ArrayList<String>) query.list();
-
-            Query roles =  session.createQuery("select role from user_roles u where u.username = :name").setString("name", this.getUsername());
-            ArrayList<String> rolesList = (ArrayList<String>) roles.list();
-            System.out.println(rolesList.get(0) + " to jest ROLA");
+//to co ponizej to teraz zakomentowalem 2:03
+//            Query roles =  session.createQuery("select role from user_roles u where u.username = :name").setString("name", this.getUsername());
+//            ArrayList<String> rolesList = (ArrayList<String>) roles.list();
+//            System.out.println(rolesList.get(0) + " to jest ROLA");
             DB.getUserFromBase((Integer) query.uniqueResult());
             System.out.println("PObrałem całego usera z bazy");
 
             session.close();
-            return "admin/index.xhtml?faces-redirect=true";
+//            return "admin/index.xhtml?faces-redirect=true";
 
         }
-        else {
-            session.close();
-            return null;
-        }
+//        else {
+//            session.close();
+//            return null;
+//        }
     }
+
+    public static void action2(String username){
+
+        System.out.println("AAAACTION2");
+        if(DB.getStricZalogowanyUser()==null) {
+
+
+            Session session = DB.getSession();
+            Query query = session.createQuery("select id from users u where u.username = :name").setString("name", username);
+
+            DB.getUserFromBase((Integer) query.uniqueResult());
+            System.out.println("PObrałem całego usera z bazy");
+
+            session.close();
+        }
+
+        }
+
 
     public User() {
     }
@@ -66,6 +86,7 @@ public class User implements Serializable {
     }
 
     public void setUsername(String username) {
+        System.out.println("zapisuje username ------------------------------");
         this.username = username;
     }
 

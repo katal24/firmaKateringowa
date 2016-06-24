@@ -1,6 +1,9 @@
 package filters;
 
 
+import model.DB;
+import web.User;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,20 +49,26 @@ public class loginFilters implements Filter {
 //            resp.sendRedirect(req.getServletContext().getContextPath() + "/index.xhtml");
 //        }
 
-
-        if(req.isUserInRole("Admin") && !(url.indexOf("admin")>=0)){
-            System.out.println("Wiem, ze jestem admin");
-            resp.sendRedirect(req.getServletContext().getContextPath() + "/admin/index.xhtml");
-        } else
-        if(req.isUserInRole("Manager") && !(url.indexOf("manager")>=0)){
-            resp.sendRedirect(req.getServletContext().getContextPath() + "/manager/index.xhtml");
-        } else
-        if(req.isUserInRole("User") && !(url.indexOf("user")>=0)){
-            resp.sendRedirect(req.getServletContext().getContextPath() + "/user/index.xhtml");
-        } else
-        if(req.isUserInRole("Dostawca") && !(url.indexOf("dostawca")>=0)){
-            resp.sendRedirect(req.getServletContext().getContextPath() + "/dostawca/index.xhtml");
+        // System.out.println("user: " + req.getUserPrincipal());
+        if(DB.getStricZalogowanyUser()==null){
+            User.action2(req.getUserPrincipal().toString());
+            if(req.isUserInRole("Admin") && !(url.indexOf("admin")>=0)){
+                System.out.println("Wiem, ze jestem admin");
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/admin/index.xhtml");
+            } else
+            if(req.isUserInRole("Manager") && !(url.indexOf("manager")>=0)){
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/manager/index.xhtml");
+            } else
+            if(req.isUserInRole("User") && !(url.indexOf("user")>=0)){
+                System.out.println("Wiem, ze jestem USER");
+                DB.setTopTenPotraw();
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/user/index.xhtml");
+            } else
+            if(req.isUserInRole("Dostawca") && !(url.indexOf("dostawca")>=0)){
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/dostawca/index.xhtml");
+            }
         } else{
+            System.out.println("IDEEEEEEEEEEEE");
             filterChain.doFilter(servletRequest, servletResponse);
         }
 
