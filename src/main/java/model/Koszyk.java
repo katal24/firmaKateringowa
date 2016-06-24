@@ -99,7 +99,7 @@ public class Koszyk {
         if(this.wybranySposobZaplaty.equals("platnosc gotowka")) {
             zamowienie.setRachunek(this.koszt());
         } else{
-            zamowienie.setRachunek(0.0);
+            zamowienie.setRachunek(this.koszt());
             user = DB.getStricZalogowanyUser();
             user.setDoZaplaty(user.getDoZaplaty()+this.koszt());
         }

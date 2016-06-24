@@ -703,6 +703,7 @@ public class DB{
         final Session session = getSession();
         session.beginTransaction();
         for(String zamawia : zamawiaja){
+            System.out.println("ZAMAWIA: " + zamawia);
             if(!zamawia.equals("null")) {
                 Query query = session.createSQLQuery("SELECT mail from users where username='" + zamawia + "'");
                 String mail = ((String) query.list().get(0).toString());
@@ -829,14 +830,12 @@ public class DB{
         Query query = session.createSQLQuery("SELECT * from katalog where idZamowienia='"+zk.getZamowienie().getId()+"'").addEntity(Katalog.class);
         Katalog k1 = (Katalog) query.list().get(0);
         session.delete(k1);
-//        session.getTransaction().commit();
 
         Query query1 = session.createSQLQuery("SELECT * from zawartoscZamowienia where idZamowienia='"+zk.getZamowienie().getId()+"'").addEntity(ZawartoscZamowienia.class);
         ArrayList<ZawartoscZamowienia> list = (ArrayList<ZawartoscZamowienia>) query1.list();
         for(ZawartoscZamowienia z1 : list) {
             System.out.println(z1.getId() + " " + z1.getIdZamowienia() + " " + z1.getIdPotrawy());
             session.delete(z1);
-//            session.getTransaction().commit();
         }
 
         Zamowienia zmieniana = (Zamowienia) session.get(Zamowienia.class, zk.getZamowienie().getId());
@@ -924,7 +923,7 @@ public class DB{
         addSkladnikToBase(nowy);
 
         listSkladnikowPotrawy.add(nowy);
-        dodajSkladnik = !dodajSkladnik;
+        dodajSkladnik = false;
         return null;
     }
 

@@ -8,17 +8,16 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
 
-<!--TODO-->
-<!--Poprawić zapis edycji potrawy-->
-<!--ew. usuwanie skladnikow, kiedy usuwamy potrawe-->
-<!--dorobić walidacje-->
-
 <h:head>
     <title>e-Kantor</title>
 </h:head>
 
 <h:body>
     <f:view>
+        <h:form>
+            <h:commandButton id="startButton" value="   Powrót   " action="index.xhtml"/>
+        </h:form>
+
         <h2>Lista zamówień</h2>
         <h:form id="form_zamowienia">
 
@@ -29,7 +28,6 @@
                 </p:column>
                 <p:column>
                     <f:facet name="header">Zamówienie</f:facet>
-
                     <h:dataTable value="#{zamowienie.potrawyList}" var="item" tableStyle="width:auto">
                         <p:column>- #{item}</p:column>
                     </h:dataTable>
@@ -54,27 +52,30 @@
                 <p:column>
                     <f:facet name="header">Status</f:facet>
                     <h:outputText value="#{zamowienie.zamowienie.status}" rendered="#{not zamowienie.editable}"/>
-                    <h:selectOneMenu id="a" value="#{zamowienie.zamowienie.status}" rendered="#{zamowienie.editable}" >
-                        <f:selectItems id="itemy" value="#{koszyk.statusy}" rendered="#{zamowienie.editable}"/>
-                    </h:selectOneMenu>
                 </p:column>
                 <p:column>
                     <f:facet name="header">Płatność</f:facet>
                     <h:outputText value="#{zamowienie.zamowienie.platnosc}"/>
                 </p:column>
                 <p:column>
-                    <f:facet name="header">Usuń</f:facet>
+                    <f:facet name="header">Notatka</f:facet>
+                    <h:outputText value="#{zamowienie.zamowienie.notatka}" rendered="#{not zamowienie.editable}"/>
+                    <h:inputTextarea value="#{zamowienie.zamowienie.notatka}" rendered="#{zamowienie.editable}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Edytuj</f:facet>
+                    <h:commandLink value="Edytuj" action="#{db.editZamowienie(zamowienie)}" rendered="#{not zamowienie.editable}" >
+                        <f:actionListener binding="#{koszyk.przygotujZlecenie()}"/>
+                    </h:commandLink>
+                    <h:commandLink value="Zapisz zmiany" action="#{db.updateZamowienie(zamowienie)}" rendered="#{zamowienie.editable}" /><br/>
                     <h:commandLink value="Usun" action="#{db.deleteZamowienie(zamowienie)}" />
                 </p:column>
-
-
             </p:dataTable>
 
         </h:form>
 
-
-        <h2>Lista Subskrypcji</h2>
-        <h:form id="form_sybskrypcje">
+        <h2>Lista subskrypcji</h2>
+        <h:form id="form_subskrypcje">
 
             <p:dataTable id="listaSubskrypcji" value="#{db.allSubskrypcje}" var="zamowienie" tableStyle="width:auto">
                 <p:column>
@@ -105,25 +106,30 @@
                     <f:facet name="header">Rachunek</f:facet>
                     <h:outputText value="#{zamowienie.zamowienie.rachunek}0 zł"/>
                 </p:column>
+
                 <p:column>
                     <f:facet name="header">Płatność</f:facet>
                     <h:outputText value="#{zamowienie.zamowienie.platnosc}"/>
                 </p:column>
                 <p:column>
-                    <f:facet name="header">Usuń</f:facet>
+                    <f:facet name="header">Notatka</f:facet>
+                    <h:outputText value="#{zamowienie.zamowienie.notatka}" rendered="#{not zamowienie.editable}"/>
+                    <h:inputTextarea value="#{zamowienie.zamowienie.notatka}" rendered="#{zamowienie.editable}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Dojazd</f:facet>
+                    <h:commandLink value="Pokaż szczegóły dojazdu" action="#{db.browse(zamowienie.zamowienie.miejsce)}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Edytuj</f:facet>
+                    <h:commandLink value="Edytuj" action="#{db.editZamowienie(zamowienie)}" rendered="#{not zamowienie.editable}" >
+                        <f:actionListener binding="#{koszyk.przygotujZlecenie()}"/>
+                    </h:commandLink>
+                    <h:commandLink value="Zapisz zmiany" action="#{db.updateZamowienie(zamowienie)}" rendered="#{zamowienie.editable}" /><br/>
                     <h:commandLink value="Usun" action="#{db.deleteZamowienie(zamowienie)}" />
                 </p:column>
-
-
             </p:dataTable>
-
         </h:form>
-
-        <p>
-            <h:outputText value="______________________________" style="vertical-align:super;"/><br/>
-            <a href="index.xhtml">MENU LABORATORIUM</a>
-        </p>
-
     </f:view>
 </h:body>
 </html>

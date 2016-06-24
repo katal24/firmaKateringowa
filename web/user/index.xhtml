@@ -19,7 +19,6 @@
             <h:commandButton id="startButton" value="   Menu   " action="#{db.update()}"/>
             <h:commandButton id="zamowieniaMojeButton" value="   Zamówienia   " action="#{db.gotoMojeZamowienia()}"/>
             <h:commandButton id="profilButton" value="   Profil  " action="edit.xhtml"/><br/><br/>
-            <!--<h:commandButton id="topTenButon" value="Pokaż najczęściej zamawiane" action="#{db.setTopTenPotraw()}"/><br/><br/>-->
         </h:form>
 
         <h2>Witaj user #{db.zalogowanyUser.imie}!</h2>
@@ -78,18 +77,6 @@
 
         </h:form>
 
-
-        <!--<h:form>-->
-            <!--<h:commandButton id="startButton" value="Pokaż menu" action="#{db.update()}"/>-->
-            <!--<h:commandButton id="zamowieniaMojeButton" value="Pokaż moje zamówienia" action="#{db.gotoMojeZamowienia()}"/><br/><br/>-->
-            <!--&lt;!&ndash;<h:commandButton id="topTenButon" value="Pokaż najczęściej zamawiane" action="#{db.setTopTenPotraw()}"/><br/><br/>&ndash;&gt;-->
-        <!--</h:form>-->
-
-
-        <p>
-            <h:outputText value="______________________________" style="vertical-align:super;"/><br/>
-            <a href="index.xhtml">MENU LABORATORIUM</a>
-        </p>
     </f:view>
 </h:body>
 </html>

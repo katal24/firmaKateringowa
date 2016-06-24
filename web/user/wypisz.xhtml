@@ -15,7 +15,6 @@
         <h:commandButton id="startButton" value="   Menu   " action="#{db.update()}"/>
         <h:commandButton id="zamowieniaMojeButton" value="   Strona główna   " action="index.xhtml"/>
         <h:commandButton id="profilButton" value="   Profil  " action="edit.xhtml"/><br/><br/>
-        <!--<h:commandButton id="topTenButon" value="Pokaż najczęściej zamawiane" action="#{db.setTopTenPotraw()}"/><br/><br/>-->
     </h:form>
 
     <f:view>
@@ -63,33 +62,9 @@
                         <h:outputText value="     (#{skladnik.ilosc})"/>
                     </h:column>
                 </h:dataTable>
-
-
-                <!--<h:selectOneMenu id="potrawyList" value="">-->
-                <!--<f:selectItems value="#{db.potrawyNames}" />-->
-                <!--</h:selectOneMenu>-->
-
-
-                <!--<h:message style="color: red" for="ile"/>-->
-
-                <!--<h:outputLabel value="Zamien na "/>-->
-                <!--<h:selectOneMenu id="waluta2" value="#{waluta.waluta2}">-->
-                <!--<f:selectItems value="#{waluta.waluty}" />-->
-                <!--</h:selectOneMenu>-->
-                <!--<h:message style="color: red" for="ile"/>-->
-
-
             </h:panelGrid>
-            <!--<h:commandButton id="startButton" value="Zamien" action="#{waluta.login()}"/><br/><br/>-->
-            <!--<h:commandButton value="Dodaj walute" action="dodajWalute.xhtml"/>-->
-
 
         </h:form>
-
-        <p>
-            <h:outputText value="______________________________" style="vertical-align:super;"/><br/>
-            <a href="index.xhtml">MENU LABORATORIUM</a>
-        </p>
 
     </f:view>
 </h:body>

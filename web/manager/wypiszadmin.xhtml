@@ -19,7 +19,11 @@
 
 <h:body>
     <f:view>
-        <h2>Konsola administratora</h2>
+        <h:form>
+            <h:commandButton id="startButton" value="   Powrót   " action="index.xhtml"/>
+        </h:form>
+
+        <h2>Konsola menedżera menu</h2>
         <h:form id="myform">
 
             <p:panelGrid columns="1">
@@ -139,12 +143,6 @@
             </p:panelGrid>
 
         </h:form>
-
-        <p>
-            <h:outputText value="______________________________" style="vertical-align:super;"/><br/>
-            <a href="index.xhtml">MENU LABORATORIUM</a>
-        </p>
-
     </f:view>
 </h:body>
 </html>
