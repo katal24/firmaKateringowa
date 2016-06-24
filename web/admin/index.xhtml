@@ -13,6 +13,8 @@
 
 <h:body>
     <f:view>
+        <a href="logout.xhtml">WYLOGUJ</a>
+
         <h2>Witaj #{db.zalogowanyUser.imie}!</h2>
         <!--<a href="logout.xhtml">WYLOGUJ</a> -->
 
@@ -21,6 +23,43 @@
             <br/><br/>
             <h:commandButton id="startButton" value="   Przejdź do zamówień   " action="#{db.gotoZamowienia()}"/>
         </h:form>
+
+
+        <br/><br/>
+
+        <h3>Dodaj nowych klientów</h3>
+
+        <h:form id="f"  >
+            <h:commandButton value="Zarejestruj użytkownika" action="#{db.setRolesList2()}">
+                <f:ajax render="@form"/>
+            </h:commandButton>
+            <h:panelGrid columns="3" rendered="#{db.rejestracja}">
+
+                <h:outputLabel id="cos" for="j_1" value="Login: "/>
+                <h:inputText value="#{user.username}" id="j_1" required="true" requiredMessage="Wypełnij to pole"/>
+                <h:message for="j_1"/>
+
+                <h:outputLabel for="j_password1" value="Password: "/>
+                <h:inputSecret value="#{user.password}" id="j_password1" required="true" requiredMessage="Wypelnij to pole"/>
+                <h:message for="j_password1"/>
+
+                <h:outputLabel for="j_imie" value="Imię i nazwisko: "/>
+                <h:inputText value="#{user.imie}" id="j_imie" required="true" requiredMessage="Wypełnij to pole"/>
+                <h:message for="j_imie"/>
+
+                <h:outputLabel for="j_email" value="E-mail: "/>
+                <h:inputText value="#{user.mail}" id="j_email" required="true" requiredMessage="Wypełnij to pole"/>
+                <h:message for="j_email"/>
+
+                <h:outputLabel for="j_firma" value="Firma: "/>
+                <h:selectOneMenu id="j_firma" value="#{user.firma}">
+                    <f:selectItems value="#{db.listaFirmNazwy}" />
+                </h:selectOneMenu>
+                <h:commandButton value="Zarejestruj" action="#{db.addUser(user)}"/>
+            </h:panelGrid>
+
+        </h:form>
+
     </f:view>
 </h:body>
 </html>

@@ -194,7 +194,7 @@ public class DB{
         return zalogowanyUser;
     }
 
-    public void setZalogowanyUser(Users zalogowanyUser1) {
+    public static void setZalogowanyUser(Users zalogowanyUser1) {
         zalogowanyUser = zalogowanyUser1;
     }
 
@@ -205,7 +205,7 @@ public class DB{
         System.out.println("IMIE: " + zalogowanyUser.getImie());
     }
 
-    public String setRolesList2(){
+    public void setRolesList2(){
         System.out.println("jestem w set role 2");
         rejestracja = !rejestracja;
         getAllFirmy();
@@ -214,18 +214,21 @@ public class DB{
 //        rolesList.add("manager menu");
 //        rolesList.add("pracownik cateringu");
 //        rolesList.add("klient");
-        return null;
+   //     return null;
     }
 
     public String addUser(Users user) {
 
         System.out.println("-------------------------Dodaje usera do bazy:");
         //dorobic dodanie usera do bazy
-
+        UserRoles rola = new UserRoles();
+        rola.setRole("User");
+        rola.setUsername(user.getUsername());
         user.setRola("klient");
         final Session session = getSession();
         session.beginTransaction();
         session.save(user);
+        session.save(rola);
         session.getTransaction().commit();
         session.close();
 

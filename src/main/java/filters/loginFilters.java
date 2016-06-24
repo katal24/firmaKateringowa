@@ -50,26 +50,23 @@ public class loginFilters implements Filter {
 //        }
 
         // System.out.println("user: " + req.getUserPrincipal());
-        if(DB.getStricZalogowanyUser()==null){
+        if(DB.getStricZalogowanyUser()==null){  // uzytkownik niezalogowany
             User.action2(req.getUserPrincipal().toString());
-            if(req.isUserInRole("Admin") && !(url.indexOf("admin")>=0)){
-                System.out.println("Wiem, ze jestem admin");
-                resp.sendRedirect(req.getServletContext().getContextPath() + "/admin/index.xhtml");
-            } else
-            if(req.isUserInRole("Manager") && !(url.indexOf("manager")>=0)){
-                resp.sendRedirect(req.getServletContext().getContextPath() + "/manager/index.xhtml");
-            } else
-            if(req.isUserInRole("User") && !(url.indexOf("user")>=0)){
-                System.out.println("Wiem, ze jestem USER");
-                DB.setTopTenPotraw();
-                resp.sendRedirect(req.getServletContext().getContextPath() + "/user/index.xhtml");
-            } else
-            if(req.isUserInRole("Dostawca") && !(url.indexOf("dostawca")>=0)){
-                resp.sendRedirect(req.getServletContext().getContextPath() + "/dostawca/index.xhtml");
+            gotoIndex(req, resp);
+        } else{     //ZALOGOWANY
+            if(url.indexOf("login.xhtml")>=0 || url.indexOf("exploded/index.xhtml")>=0){ //zalogowany chce isc na strone logowania
+                gotoIndex(req, resp);
+            } else   //zalogowany chce sie wylogowac
+            if(url.indexOf("logout.xhtml")>=0){
+                DB.setZalogowanyUser(null);
+                req.getSession().invalidate();
+                resp.sendRedirect(req.getServletContext().getContextPath() + "/index.xhtml");
             }
-        } else{
-            System.out.println("IDEEEEEEEEEEEE");
-            filterChain.doFilter(servletRequest, servletResponse);
+
+            else {                     //czyli nie chce isc na strone logowania, tylko normalnie
+                System.out.println("IDEEEEEEEEEEEE");
+                filterChain.doFilter(servletRequest, servletResponse);
+            }
         }
 
 
@@ -101,6 +98,23 @@ public class loginFilters implements Filter {
 
 
 
+    }
+
+
+    public void gotoIndex( HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        if(req.isUserInRole("Admin") ){
+            resp.sendRedirect(req.getServletContext().getContextPath() + "/admin/index.xhtml");
+        } else
+        if(req.isUserInRole("Manager") ){
+            resp.sendRedirect(req.getServletContext().getContextPath() + "/manager/index.xhtml");
+        } else
+        if(req.isUserInRole("User") ){
+            DB.setTopTenPotraw();
+            resp.sendRedirect(req.getServletContext().getContextPath() + "/user/index.xhtml");
+        } else
+        if(req.isUserInRole("Dostawca") ){
+            resp.sendRedirect(req.getServletContext().getContextPath() + "/dostawca/index.xhtml");
+        }
     }
 
     public void destroy() {
