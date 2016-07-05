@@ -13,17 +13,7 @@ import java.util.ArrayList;
  */
 @ManagedBean(name="koszyk")
 @SessionScoped
-//@Path("/kosz")
 public class Koszyk {
-
-//    @GET
-//    @Produces("koszyk/plain")
-//    @Path("/geta")
-//    public String getClichedMessage() {
-//        // Return some cliched textual content
-//        // return allPotrawy.toString();
-//        return "koszyczek";
-//    }
 
     private ArrayList<Potrawy> wKoszyku;
     private double koszt;

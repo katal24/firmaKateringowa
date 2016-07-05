@@ -87,5 +87,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="org.jboss.as:jboss-as-security:7.0.2.Final" level="project" />
   </component>
 </module>

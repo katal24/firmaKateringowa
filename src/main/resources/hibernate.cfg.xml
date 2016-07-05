@@ -22,34 +22,6 @@
         <mapping class="model.Zamowienie"/>
         <mapping class="baza.Firmy"/>
         <mapping class="baza.UserRoles"/>
-        <!--<mapping class="main.model.SurveysEntity"/>-->
-        <!--<mapping class="main.model.User"/>-->
-        <!--DB schema will be updated if needed -->
-        <!--<property name="hbm2ddl.auto">update</property> -->
+
     </session-factory>
 </hibernate-configuration>
-<!--<security-constraint>-->
-        <!--<web-resource-collection>-->
-            <!--<web-resource-name>HtmlAuth</web-resource-name>-->
-            <!--<description>zasady bezpieczeństwa aplikacji</description>-->
-            <!--<url-pattern>/*</url-pattern>-->
-            <!--<http-method>GET</http-method>-->
-            <!--<http-method>POST</http-method>-->
-        <!--</web-resource-collection>-->
-        <!--<auth-constraint>-->
-            <!--<role-name>Manager</role-name>-->
-        <!--</auth-constraint>-->
-    <!--</security-constraint>-->
-    <!--<login-config>-->
-
-        <!--<auth-method>FORM</auth-method>-->
-        <!--<realm-name>file</realm-name>-->
-        <!--<form-login-config>-->
-            <!--<form-login-page>/login.xhtml</form-login-page>-->
-            <!--<form-error-page>/logout.xhtml</form-error-page>-->
-        <!--</form-login-config>-->
-
-    <!--</login-config>-->
-    <!--<security-role>-->
-        <!--<role-name>Manager</role-name>-->
-    <!--</security-role>-->

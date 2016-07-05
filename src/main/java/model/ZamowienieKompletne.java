@@ -25,13 +25,7 @@ public class ZamowienieKompletne {
         session.beginTransaction();
 
         Query q = session.createSQLQuery("select nazwaPotrawy from potrawy p join zawartoscZamowienia zz on(zz.idPotrawy=p.id) where zz.idZamowienia='"+zamowienie.getId()+"'");
-//        System.out.println(Arrays.toString(q.list().toArray()));
-//        System.out.println("potrawy????? " + Arrays.toString(q.));
          potrawyList = (ArrayList<String>) q.list();
-//        ArrayList<Zamowienie> zamowieniaList = (ArrayList<Zamowienie>) q.list();
-//        for(Zamowienie z : zamowieniaList){
-//            System.out.println(z);
-//        }
 
     }
 

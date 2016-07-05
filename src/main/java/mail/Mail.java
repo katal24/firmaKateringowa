@@ -9,9 +9,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import java.util.Properties;
 
 /**
@@ -32,19 +30,9 @@ public class Mail {
     static final String from="talagadawid@gmail.com";
     static final String pass = "dawid516";
     public static String a = "aaaaaaaaaaaa";
-//    String[] to ={mailAddress};
-//
-    @GET
-    @Produces("potrawy/plain")
-    @Path("/geta")
-    public String getClichedMessage() {
-        // Return some cliched textual content
-        // return allPotrawy.toString();
-        return "aa";
-    }
+
 
     public static void send(){
-        System.out.println("WYSYŁAM MAIL");
         props = System.getProperties();
         host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
@@ -100,6 +88,7 @@ public class Mail {
             if(potrawa.equals("rozliczenie")){
                 message.setText(to[0] + " - pracownik państwa firmy w ostatnim czasie dokonał zamówień na kwotę " + potrawa + " została usunięta z menu. Zachęcamy do złożenia nowego zamówienia!");
             }
+
             message.setText("Potrawa, którą subskrybujesz '" + potrawa + "' została usunięta z menu. Zachęcamy do złożenia nowego zamówienia!");
 
             Transport transport = session.getTransport("smtp");

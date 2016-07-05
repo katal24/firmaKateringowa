@@ -63,9 +63,11 @@
                     <f:ajax render="potrawyList"/>
                 </h:selectOneMenu> <br/><br/>
 
+            <p:panelGrid columns="1">
+
                 <p:dataTable id="potrawyList" value="#{db.potrawy}" var="pot">
                     <p:column>
-                        <p:inputText value="#{pot.nazwaPotrawy}" rendered="#{pot.editable}"/>
+                        <p:inputText value="#{pot.nazwaPotrawy}" size="30" rendered="#{pot.editable}"/>
                         <h:outputText value="#{pot.nazwaPotrawy}" rendered="#{not pot.editable}"/>
                     </p:column>
                     <p:column>
@@ -79,10 +81,10 @@
                     </p:column>
                     <p:column>
                         <h:commandLink value="Edytuj" action="#{db.editPotrawy(pot)}" rendered="#{not pot.editable}" />
-                        <h:commandLink value="Zapisz zmiany1" action="#{db.saveAction(pot)}" rendered="#{pot.editable}" />
+                        <h:commandLink value="Zapisz zmiany" action="#{db.saveAction(pot)}" rendered="#{pot.editable}" />
                     </p:column>
                     <p:column>
-                        <h:commandLink value="Usun" action="#{db.deletePotrawy(pot)}" rendered="#{not pot.editable}" />
+                        <h:commandLink value="Usun" action="#{db.deletePotrawy(pot)}" rendered="#{!pot.isInMenu.equals('1')}" />
                     </p:column>
                     <p:column>
                         <h:commandLink value="Usun z menu" action="#{db.deletePotrawyFromMenu(pot)}" rendered="#{pot.isInMenu.equals('1')}" />
@@ -95,7 +97,7 @@
 
                     </p:column>
                 </p:dataTable>
-
+</p:panelGrid>
                 <!--DODAWANIE POTRAWY-->
                 <h:commandButton id="pot4" value="Dodaj danie" action="#{db.setDodajPotrawe}" />
             </p:panelGrid>

@@ -30,17 +30,6 @@ import java.util.List;
 @ManagedBean(name="db")
 @SessionScoped
 public class DB{
-//
-//    @GET
-//    @Produces("potrawa/plain")
-//    @Path("/geta")
-//    public String getClichedMessage() {
-//        System.out.println("#########################################JESTEM W TEJ METODZIE W BAZIE DANYCH");
-//        // Return some cliched textual content
-//        // return allPotrawy.toString();
-//        return "bazaaa";
-//    }
-
 
     private ArrayList<Potrawy> potrawy;
     private ArrayList<Potrawy> potrawyMenu;
@@ -209,18 +198,12 @@ public class DB{
         System.out.println("jestem w set role 2");
         rejestracja = !rejestracja;
         getAllFirmy();
-//        this.rolesList = new ArrayList<String>();
-//        rolesList.add("admin");
-//        rolesList.add("manager menu");
-//        rolesList.add("pracownik cateringu");
-//        rolesList.add("klient");
-   //     return null;
+
     }
 
     public String addUser(Users user) {
 
         System.out.println("-------------------------Dodaje usera do bazy:");
-        //dorobic dodanie usera do bazy
         UserRoles rola = new UserRoles();
         rola.setRole("User");
         rola.setUsername(user.getUsername());
@@ -268,9 +251,6 @@ public class DB{
         this.wybranaPotrawa = wybranaPotrawa;
         System.out.println("wybrałem potrawe" + wybranaPotrawa);
     }
-
-    // List<String> allPotrawyNames;
-
 
     public ArrayList<Potrawy> getPotrawy() {
         return potrawy;
@@ -334,12 +314,7 @@ public class DB{
         dajPotrawyMenu();
     }
 
-//    public void browse(String miejsce) throws URISyntaxException, IOException {
-//        java.awt.Desktop.getDesktop().browse(new URI("https://www.google.pl"));
-//    }
-
     public static void openWebpage(URI uri) throws URISyntaxException {
-//        URI uri = new URI("https://www.google.pl");
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
             try {
@@ -661,7 +636,7 @@ public class DB{
         return null;
     }
 
-    public String saveAction(Potrawy po){
+    public void saveAction(Potrawy po){
         System.out.println("ZAPISUJE DO BAZY potrawe " + po.getNazwaPotrawy());
         po.setEditable(false);
         final Session session = getSession();
@@ -670,7 +645,7 @@ public class DB{
         session.update(po);
         session.getTransaction().commit();
         session.close();
-        return null;
+      //  return null;
     }
 
     public String updateZamowienie(ZamowienieKompletne zk){
@@ -689,12 +664,10 @@ public class DB{
     }
 
 
-
-
-    public String editPotrawy(Potrawy k) {
+    public void editPotrawy(Potrawy k) {
         System.out.println("============= EDYTUJE " + k.getNazwaPotrawy());
         k.setEditable(true);
-        return null;
+       // return null;
     }
 
     public String deletePotrawyFromMenu(Potrawy p){
@@ -805,7 +778,6 @@ public class DB{
     }
 
     public String deletePotrawy(Potrawy k) {
-        //todo dodac usuwanie skladnikow z tego produktu z bazy danych
         potrawy.remove(k);
         final Session session = getSession();
         session.beginTransaction();
@@ -1020,84 +992,5 @@ public class DB{
         session.close();
     }
 
-
-    //    public SurveysEntity getSurveyForName(String name){
-//        System.out.println("bede pobieral z BAZY dla danej nazwy");
-//        final Session session = getSession();
-//        session.beginTransaction();
-//
-//        Query query = session.createSQLQuery("SELECT * from surveys where name='"+name+"'").addEntity(SurveysEntity.class);
-//        SurveysEntity entity = (SurveysEntity) query.list().get(0);
-//        session.close();
-//        System.out.println("POBRALEM Z BAZY ankiete dla danej nazwy");
-//
-//        return entity;
-//    }
-//
-//    public static void main() throws Exception {
-//        System.out.println("jestem w main w DB");
-//        final Session session = getSession();
-//
-//        SurveysEntity survey = new SurveysEntity("Q","W","E","R","T");
-//// zapis do bazy
-//        session.beginTransaction();
-//        session.save(survey);
-//        session.getTransaction().commit();
-////        session.close();
-//
-//
-//        //odczyt z bazy przez id
-//        Transaction tx = session.getTransaction();
-//        survey = (SurveysEntity) session.get(SurveysEntity.class, 1);
-//        String variants = survey.getVariants();
-//
-//
-//
-//        //odczyt poprzez select CAŁEJ TABELI
-//        Query query = session.createQuery("FROM SurveysEntity");
-//
-//
-//        List list = query.list();
-//
-//        for (Iterator iterator =
-//             list.iterator(); iterator.hasNext();){
-//            System.out.println("===================================");
-//            SurveysEntity survey1 = (SurveysEntity) iterator.next();
-//            System.out.print(survey1);
-//
-//        }
-//
-//
-//        //ODCZYT PRZEZ SELECT KONKRETNEJ WARTOSCI LUB WIERSZA
-//        Query query3 = session.createSQLQuery("SELECT categories from surveys where name='c'");
-//        String survey3 = (String) query3.list().get(1);
-//        System.out.println("WZIALEM CATEGOIRE Z BAZY I WYGLADAJA ONE TAK: " + survey3);
-//     //   Query query3 = session.createSQLQuery("SELECT categories from SurveysEntity where name='c'");
-//
-//
-//
-//        // odczyt wybranoego elementu
-//
-////        for(SurveysEntity s : list){
-////            System.out.println(s.toString());
-////        }
-//        session.close();
-//
-////        try {
-////            System.out.println("querying all the managed entities...");
-////            final Map metadataMap = session.getSessionFactory().getAllClassMetadata();
-////            for (Object key : metadataMap.keySet()) {
-////                final ClassMetadata classMetadata = (ClassMetadata) metadataMap.get(key);
-////                final String entityName = classMetadata.getEntityName();
-////                final Query query = session.createQuery("from " + entityName);
-////                System.out.println("executing: " + query.getQueryString());
-////                for (Object o : query.list()) {
-////                    System.out.println("  " + o);
-////                }
-////            }
-////        } finally {
-////            session.close();
-////        }
-//    }
 
 }
